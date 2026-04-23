@@ -1,9 +1,11 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import sharp from 'sharp'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
+import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
+import { defaultLexical } from '@/fields/defaultLexical'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -12,7 +14,6 @@ import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
@@ -55,6 +56,26 @@ export default buildConfig({
       ],
     },
   },
+  localization: {
+    locales: [
+      { label: 'Slovensky', code: 'sk' },
+      { label: 'English', code: 'en' },
+    ],
+    defaultLocale: 'sk',
+    fallback: true,
+  },
+  email: nodemailerAdapter({
+    defaultFromAddress: 'informacie@zwicker.sk',
+    defaultFromName: 'Zwicker',
+    transportOptions: {
+      host: '',
+      port: 587,
+      auth: {
+        user: 'test',
+        pass: 'test',
+      },
+    },
+  }),
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: postgresAdapter({
@@ -63,7 +84,10 @@ export default buildConfig({
     },
   }),
   collections: [Pages, Posts, Media, Categories, Users],
-  cors: [getServerSideURL()].filter(Boolean),
+  cors: [
+    getServerSideURL(),
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+  ].filter(Boolean),
   globals: [Header, Footer],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
