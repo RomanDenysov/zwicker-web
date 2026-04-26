@@ -3,10 +3,30 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
+import { BlogGrid } from '../../blocks/BlogGrid/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
+import { ChefsCourseMenu } from '../../blocks/ChefsCourseMenu/config'
+import { ChefsHighlight } from '../../blocks/ChefsHighlight/config'
+import { ChefsRow } from '../../blocks/ChefsRow/config'
+import { ContactCards } from '../../blocks/ContactCards/config'
 import { Content } from '../../blocks/Content/config'
+import { DailyMenuImage } from '../../blocks/DailyMenuImage/config'
+import { EnSection } from '../../blocks/EnSection/config'
+import { FamilyLunchCTA } from '../../blocks/FamilyLunchCTA/config'
+import { FeaturedPost } from '../../blocks/FeaturedPost/config'
 import { FormBlock } from '../../blocks/Form/config'
+import { GalleryStrip } from '../../blocks/GalleryStrip/config'
+import { ImageBanner } from '../../blocks/ImageBanner/config'
+import { Intro } from '../../blocks/Intro/config'
+import { MapSection } from '../../blocks/MapSection/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { MenuPreview } from '../../blocks/MenuPreview/config'
+import { Newsletter } from '../../blocks/Newsletter/config'
+import { Pillars } from '../../blocks/Pillars/config'
+import { PricingCards } from '../../blocks/PricingCards/config'
+import { RoomsGrid } from '../../blocks/RoomsGrid/config'
+import { StatsRow } from '../../blocks/StatsRow/config'
+import { Steps } from '../../blocks/Steps/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -72,8 +92,33 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
-              required: true,
+              blocks: [
+                Intro,
+                Pillars,
+                ImageBanner,
+                MenuPreview,
+                ChefsHighlight,
+                RoomsGrid,
+                FamilyLunchCTA,
+                GalleryStrip,
+                Steps,
+                ChefsCourseMenu,
+                ChefsRow,
+                StatsRow,
+                PricingCards,
+                ContactCards,
+                MapSection,
+                EnSection,
+                FeaturedPost,
+                BlogGrid,
+                Newsletter,
+                DailyMenuImage,
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+              ],
               admin: {
                 initCollapsed: true,
               },

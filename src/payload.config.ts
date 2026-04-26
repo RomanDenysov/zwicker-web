@@ -1,5 +1,4 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp'
@@ -10,10 +9,13 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { Rooms } from './collections/Rooms'
 import { Users } from './collections/Users'
+import { DailyMenu } from './DailyMenu/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
+import { Settings } from './Settings/config'
 import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
@@ -64,18 +66,18 @@ export default buildConfig({
     defaultLocale: 'sk',
     fallback: true,
   },
-  email: nodemailerAdapter({
-    defaultFromAddress: 'informacie@zwicker.sk',
-    defaultFromName: 'Zwicker',
-    transportOptions: {
-      host: '',
-      port: 587,
-      auth: {
-        user: 'test',
-        pass: 'test',
-      },
-    },
-  }),
+  // email: nodemailerAdapter({
+  //   defaultFromAddress: 'informacie@zwicker.sk',
+  //   defaultFromName: 'Zwicker',
+  //   transportOptions: {
+  //     host: '',
+  //     port: 587,
+  //     auth: {
+  //       user: 'test',
+  //       pass: 'test',
+  //     },
+  //   },
+  // }),
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: postgresAdapter({
@@ -83,12 +85,12 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Rooms, Media, Categories, Users],
   cors: [
     getServerSideURL(),
     process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
   ].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, Settings, DailyMenu],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

@@ -10,6 +10,7 @@ import {
 export const Archive: Block = {
   slug: 'archive',
   interfaceName: 'ArchiveBlock',
+  admin: { group: 'Základné' },
   fields: [
     {
       name: 'introContent',

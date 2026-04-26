@@ -10,6 +10,7 @@ import {
 export const FormBlock: Block = {
   slug: 'formBlock',
   interfaceName: 'FormBlock',
+  admin: { group: 'Kontakt' },
   fields: [
     {
       name: 'form',

@@ -1,73 +1,68 @@
-import { formatDateTime } from 'src/utilities/formatDateTime'
+'use client'
+
 import React from 'react'
 
 import type { Post } from '@/payload-types'
 
-import { Media } from '@/components/Media'
 import { formatAuthors } from '@/utilities/formatAuthors'
+import { formatDateTime } from '@/utilities/formatDateTime'
+import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
+import { useDarkTheme } from '@/heros/shared/useDarkTheme'
 
-export const PostHero: React.FC<{
-  post: Post
-}> = ({ post }) => {
+export const PostHero: React.FC<{ post: Post }> = ({ post }) => {
   const { categories, heroImage, populatedAuthors, publishedAt, title } = post
+  useDarkTheme()
 
   const hasAuthors =
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8">
-        <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
-          <div className="uppercase text-sm mb-6">
-            {categories?.map((category, index) => {
+    <section
+      data-theme="dark"
+      className="relative h-[400px] -mt-16 flex items-end overflow-hidden text-white"
+    >
+      {heroImage && typeof heroImage === 'object' && (
+        <ParallaxMedia
+          resource={heroImage}
+          imgClassName="object-cover brightness-[0.4] saturate-[0.75]"
+          speed={0.3}
+        />
+      )}
+      <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
+      <div className="relative z-10 container pb-10">
+        {categories && categories.length > 0 && (
+          <div className="text-label text-white/70 mb-4">
+            {categories.map((category, i) => {
               if (typeof category === 'object' && category !== null) {
-                const { title: categoryTitle } = category
-
-                const titleToUse = categoryTitle || 'Untitled category'
-
-                const isLast = index === categories.length - 1
-
+                const titleToUse = category.title || 'Untitled'
+                const isLast = i === categories.length - 1
                 return (
-                  <React.Fragment key={index}>
+                  <React.Fragment key={i}>
                     {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
+                    {!isLast && ', '}
                   </React.Fragment>
                 )
               }
               return null
             })}
           </div>
-
-          <div className="">
-            <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
-            {hasAuthors && (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm">Author</p>
-
-                  <p>{formatAuthors(populatedAuthors)}</p>
-                </div>
-              </div>
-            )}
-            {publishedAt && (
-              <div className="flex flex-col gap-1">
-                <p className="text-sm">Date Published</p>
-
-                <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
-              </div>
-            )}
-          </div>
+        )}
+        <h1 className="text-h1 max-w-3xl">{title}</h1>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-10 mt-6 text-sm text-white/70">
+          {hasAuthors && (
+            <div>
+              <div className="text-label text-white/40 mb-1">Autor</div>
+              <p>{formatAuthors(populatedAuthors)}</p>
+            </div>
+          )}
+          {publishedAt && (
+            <div>
+              <div className="text-label text-white/40 mb-1">Dátum</div>
+              <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
+            </div>
+          )}
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
-        {heroImage && typeof heroImage !== 'string' && (
-          <Media fill priority imgClassName="-z-10 object-cover" resource={heroImage} />
-        )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-linear-to-t from-black to-transparent" />
-      </div>
-    </div>
+    </section>
   )
 }

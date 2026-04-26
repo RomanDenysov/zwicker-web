@@ -1,8 +1,11 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect } from 'react'
 
 import type { Page } from '@/payload-types'
 
 import RichText from '@/components/RichText'
+import { useHeaderTheme } from '@/providers/HeaderTheme'
 
 type LowImpactHeroType =
   | {
@@ -15,11 +18,22 @@ type LowImpactHeroType =
     })
 
 export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText }) => {
+  const { setHeaderTheme } = useHeaderTheme()
+
+  useEffect(() => {
+    setHeaderTheme('dark')
+  }, [setHeaderTheme])
+
   return (
-    <div className="container mt-16">
-      <div className="max-w-[48rem]">
-        {children || (richText && <RichText data={richText} enableGutter={false} />)}
+    <section
+      data-theme="dark"
+      className="relative h-[240px] -mt-16 bg-dark text-dark-foreground flex items-center"
+    >
+      <div className="container">
+        <div className="max-w-[48rem] pt-16 pb-6">
+          {children || (richText && <RichText data={richText} enableGutter={false} className="prose-invert" />)}
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

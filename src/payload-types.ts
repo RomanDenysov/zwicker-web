@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    rooms: Room;
     media: Media;
     categories: Category;
     users: User;
@@ -91,6 +92,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    rooms: RoomsSelect<false> | RoomsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -112,10 +114,14 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    settings: Setting;
+    'daily-menu': DailyMenu;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
+    'daily-menu': DailyMenuSelect<false> | DailyMenuSelect<true>;
   };
   locale: 'sk' | 'en';
   widgets: {
@@ -201,7 +207,35 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout?:
+    | (
+        | IntroBlock
+        | PillarsBlock
+        | ImageBannerBlock
+        | MenuPreviewBlock
+        | ChefsHighlightBlock
+        | RoomsGridBlock
+        | FamilyLunchCTABlock
+        | GalleryStripBlock
+        | StepsBlock
+        | ChefsCourseMenuBlock
+        | ChefsRowBlock
+        | StatsRowBlock
+        | PricingCardsBlock
+        | ContactCardsBlock
+        | MapSectionBlock
+        | EnSectionBlock
+        | FeaturedPostBlock
+        | BlogGridBlock
+        | NewsletterBlock
+        | DailyMenuImageBlock
+        | CallToActionBlock
+        | ContentBlock
+        | MediaBlock
+        | ArchiveBlock
+        | FormBlock
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -438,6 +472,491 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IntroBlock".
+ */
+export interface IntroBlock {
+  sectionLabel?: string | null;
+  /**
+   * Použite znak © na zvýraznenie časti textu značkovou farbou.
+   */
+  heading: string;
+  body?: string | null;
+  image: number | Media;
+  imagePosition?: ('right' | 'left') | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'intro';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PillarsBlock".
+ */
+export interface PillarsBlock {
+  sectionLabel?: string | null;
+  background?: ('dark' | 'light') | null;
+  pillars?:
+    | {
+        title: string;
+        body: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pillars';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBannerBlock".
+ */
+export interface ImageBannerBlock {
+  image: number | Media;
+  overlayLabel?: string | null;
+  /**
+   * Text v hranatých zátvorkách [takto] sa zobrazí kurzívou.
+   */
+  overlayHeading: string;
+  height?: ('sm' | 'md' | 'lg') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuPreviewBlock".
+ */
+export interface MenuPreviewBlock {
+  sectionLabel?: string | null;
+  /**
+   * Newline rozdelí riadky. Druhý riadok bude kurzívou v značkovej farbe.
+   */
+  heading?: string | null;
+  categoriesLimit?: number | null;
+  itemsPerCategory?: number | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'menuPreview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ChefsHighlightBlock".
+ */
+export interface ChefsHighlightBlock {
+  sectionLabel?: string | null;
+  /**
+   * Použite © pre značkový accent.
+   */
+  logo?: string | null;
+  heading: string;
+  quote?: string | null;
+  body?: string | null;
+  details?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (number | null) | Media;
+  badge?: string | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'chefsHighlight';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomsGridBlock".
+ */
+export interface RoomsGridBlock {
+  sectionLabel?: string | null;
+  heading?: string | null;
+  body?: string | null;
+  /**
+   * Ak necháte prázdne, zobrazia sa všetky publikované izby.
+   */
+  rooms: (number | Room)[];
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roomsGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms".
+ */
+export interface Room {
+  id: number;
+  title: string;
+  heroImage?: (number | null) | Media;
+  gallery?: (number | Media)[] | null;
+  shortDescription?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  priceFrom: number;
+  bookingUrl?: string | null;
+  amenities?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FamilyLunchCTABlock".
+ */
+export interface FamilyLunchCTABlock {
+  sectionLabel?: string | null;
+  heading: string;
+  body?: string | null;
+  courses?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  note?: string | null;
+  /**
+   * Napr. "39 €"
+   */
+  priceAdult?: string | null;
+  priceAdultLabel?: string | null;
+  /**
+   * Napr. "17 € / dieťa do 10 rokov"
+   */
+  priceChild?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'familyLunchCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryStripBlock".
+ */
+export interface GalleryStripBlock {
+  sectionLabel?: string | null;
+  images: (number | Media)[];
+  scrollSpeed?: ('slow' | 'normal' | 'fast') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'galleryStrip';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StepsBlock".
+ */
+export interface StepsBlock {
+  sectionLabel?: string | null;
+  heading?: string | null;
+  steps?:
+    | {
+        title: string;
+        body: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'steps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ChefsCourseMenuBlock".
+ */
+export interface ChefsCourseMenuBlock {
+  sectionLabel?: string | null;
+  image?: (number | null) | Media;
+  courses?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'chefsCourseMenu';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ChefsRowBlock".
+ */
+export interface ChefsRowBlock {
+  sectionLabel?: string | null;
+  chefs?:
+    | {
+        photo: number | Media;
+        name: string;
+        role: string;
+        bio?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'chefsRow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsRowBlock".
+ */
+export interface StatsRowBlock {
+  sectionLabel?: string | null;
+  heading?: string | null;
+  body?: string | null;
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsRow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingCardsBlock".
+ */
+export interface PricingCardsBlock {
+  sectionLabel?: string | null;
+  note?: string | null;
+  cards?:
+    | {
+        price: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricingCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactCardsBlock".
+ */
+export interface ContactCardsBlock {
+  sectionLabel?: string | null;
+  cards?:
+    | {
+        kind?: ('address' | 'phone' | 'email' | 'custom') | null;
+        /**
+         * Ak je prázdne, použije sa typ.
+         */
+        label?: string | null;
+        value: string;
+        href?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapSectionBlock".
+ */
+export interface MapSectionBlock {
+  sectionLabel?: string | null;
+  address?: string | null;
+  embedSource?: ('settings' | 'custom') | null;
+  customEmbed?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mapSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EnSectionBlock".
+ */
+export interface EnSectionBlock {
+  heading?: string | null;
+  body: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'enSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostBlock".
+ */
+export interface FeaturedPostBlock {
+  sectionLabel?: string | null;
+  post: number | Post;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredPost';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogGridBlock".
+ */
+export interface BlogGridBlock {
+  sectionLabel?: string | null;
+  source?: ('latest' | 'selected') | null;
+  limit?: number | null;
+  posts?: (number | Post)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterBlock".
+ */
+export interface NewsletterBlock {
+  heading: string;
+  body?: string | null;
+  ctaLabel?: string | null;
+  disclaimer?: string | null;
+  /**
+   * Endpoint pre odoslanie e-mailu (POST).
+   */
+  formEndpoint?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsletter';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DailyMenuImageBlock".
+ */
+export interface DailyMenuImageBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'dailyMenuImage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -980,6 +1499,10 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
+        relationTo: 'rooms';
+        value: number | Room;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -1084,6 +1607,26 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        intro?: T | IntroBlockSelect<T>;
+        pillars?: T | PillarsBlockSelect<T>;
+        imageBanner?: T | ImageBannerBlockSelect<T>;
+        menuPreview?: T | MenuPreviewBlockSelect<T>;
+        chefsHighlight?: T | ChefsHighlightBlockSelect<T>;
+        roomsGrid?: T | RoomsGridBlockSelect<T>;
+        familyLunchCTA?: T | FamilyLunchCTABlockSelect<T>;
+        galleryStrip?: T | GalleryStripBlockSelect<T>;
+        steps?: T | StepsBlockSelect<T>;
+        chefsCourseMenu?: T | ChefsCourseMenuBlockSelect<T>;
+        chefsRow?: T | ChefsRowBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        pricingCards?: T | PricingCardsBlockSelect<T>;
+        contactCards?: T | ContactCardsBlockSelect<T>;
+        mapSection?: T | MapSectionBlockSelect<T>;
+        enSection?: T | EnSectionBlockSelect<T>;
+        featuredPost?: T | FeaturedPostBlockSelect<T>;
+        blogGrid?: T | BlogGridBlockSelect<T>;
+        newsletter?: T | NewsletterBlockSelect<T>;
+        dailyMenuImage?: T | DailyMenuImageBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1103,6 +1646,356 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IntroBlock_select".
+ */
+export interface IntroBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  body?: T;
+  image?: T;
+  imagePosition?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PillarsBlock_select".
+ */
+export interface PillarsBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  background?: T;
+  pillars?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBannerBlock_select".
+ */
+export interface ImageBannerBlockSelect<T extends boolean = true> {
+  image?: T;
+  overlayLabel?: T;
+  overlayHeading?: T;
+  height?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuPreviewBlock_select".
+ */
+export interface MenuPreviewBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  categoriesLimit?: T;
+  itemsPerCategory?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ChefsHighlightBlock_select".
+ */
+export interface ChefsHighlightBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  logo?: T;
+  heading?: T;
+  quote?: T;
+  body?: T;
+  details?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  image?: T;
+  badge?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoomsGridBlock_select".
+ */
+export interface RoomsGridBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  body?: T;
+  rooms?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FamilyLunchCTABlock_select".
+ */
+export interface FamilyLunchCTABlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  body?: T;
+  courses?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  note?: T;
+  priceAdult?: T;
+  priceAdultLabel?: T;
+  priceChild?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryStripBlock_select".
+ */
+export interface GalleryStripBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  images?: T;
+  scrollSpeed?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StepsBlock_select".
+ */
+export interface StepsBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  steps?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ChefsCourseMenuBlock_select".
+ */
+export interface ChefsCourseMenuBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  image?: T;
+  courses?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ChefsRowBlock_select".
+ */
+export interface ChefsRowBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  chefs?:
+    | T
+    | {
+        photo?: T;
+        name?: T;
+        role?: T;
+        bio?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsRowBlock_select".
+ */
+export interface StatsRowBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  body?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingCardsBlock_select".
+ */
+export interface PricingCardsBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  note?: T;
+  cards?:
+    | T
+    | {
+        price?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactCardsBlock_select".
+ */
+export interface ContactCardsBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  cards?:
+    | T
+    | {
+        kind?: T;
+        label?: T;
+        value?: T;
+        href?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapSectionBlock_select".
+ */
+export interface MapSectionBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  address?: T;
+  embedSource?: T;
+  customEmbed?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EnSectionBlock_select".
+ */
+export interface EnSectionBlockSelect<T extends boolean = true> {
+  heading?: T;
+  body?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostBlock_select".
+ */
+export interface FeaturedPostBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  post?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogGridBlock_select".
+ */
+export interface BlogGridBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  source?: T;
+  limit?: T;
+  posts?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterBlock_select".
+ */
+export interface NewsletterBlockSelect<T extends boolean = true> {
+  heading?: T;
+  body?: T;
+  ctaLabel?: T;
+  disclaimer?: T;
+  formEndpoint?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DailyMenuImageBlock_select".
+ */
+export interface DailyMenuImageBlockSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1213,6 +2106,39 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms_select".
+ */
+export interface RoomsSelect<T extends boolean = true> {
+  title?: T;
+  heroImage?: T;
+  gallery?: T;
+  shortDescription?: T;
+  description?: T;
+  priceFrom?: T;
+  bookingUrl?: T;
+  amenities?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -1691,6 +2617,67 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  openingHours?:
+    | {
+        days: string;
+        hours: string;
+        id?: string | null;
+      }[]
+    | null;
+  closedNote?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  /**
+   * Formulár rezervácií posiela sem
+   */
+  reservationEmail?: string | null;
+  address?: string | null;
+  googleMapsUrl?: string | null;
+  /**
+   * Skopírujte iframe kód z Google Maps → Zdieľať → Vložiť mapu
+   */
+  googleMapsEmbed?: string | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  /**
+   * Zobrazuje sa pri zdieľaní na sociálnych sieťach, ak stránka nemá vlastný
+   */
+  defaultOgImage?: (number | null) | Media;
+  siteDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "daily-menu".
+ */
+export interface DailyMenu {
+  id: number;
+  categories?:
+    | {
+        name: string;
+        items?:
+          | {
+              name: string;
+              description?: string | null;
+              price?: number | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  menuImage?: (number | null) | Media;
+  allergenNote?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1737,6 +2724,58 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  openingHours?:
+    | T
+    | {
+        days?: T;
+        hours?: T;
+        id?: T;
+      };
+  closedNote?: T;
+  phone?: T;
+  email?: T;
+  reservationEmail?: T;
+  address?: T;
+  googleMapsUrl?: T;
+  googleMapsEmbed?: T;
+  instagram?: T;
+  facebook?: T;
+  defaultOgImage?: T;
+  siteDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "daily-menu_select".
+ */
+export interface DailyMenuSelect<T extends boolean = true> {
+  categories?:
+    | T
+    | {
+        name?: T;
+        items?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              price?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  menuImage?: T;
+  allergenNote?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections_widget".
  */
 export interface CollectionsWidget {
@@ -1761,47 +2800,15 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'rooms';
+          value: number | Room;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
   };
   output?: unknown;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BannerBlock".
- */
-export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

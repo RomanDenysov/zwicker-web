@@ -1,29 +1,24 @@
-import clsx from 'clsx'
+import { cn } from '@/utilities/ui'
 import React from 'react'
 
-interface Props {
+type Size = 'sm' | 'md' | 'lg'
+
+const sizeClass: Record<Size, string> = {
+  sm: 'text-sm tracking-[0.3em]',
+  md: 'text-base tracking-[0.35em]',
+  lg: 'text-2xl tracking-[0.35em]',
+}
+
+type Props = {
+  size?: Size
   className?: string
-  loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
 }
 
-export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
-
-  const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
-
-  return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      width={193}
-      height={34}
-      loading={loading}
-      fetchPriority={priority}
-      decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
-    />
-  )
-}
+export const Logo = ({ size = 'md', className }: Props) => (
+  <span
+    aria-label="Zwicker"
+    className={cn('font-medium leading-none select-none', sizeClass[size], className)}
+  >
+    ZW<span className="copy-mark">©</span>KR
+  </span>
+)
