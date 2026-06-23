@@ -42,5 +42,14 @@ export const MenuPreview: Block = {
       max: 10,
     },
     linkGroup({ overrides: { maxRows: 1 } }),
+    {
+      name: 'images',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Fotografie pod menu',
+      hasMany: true,
+      maxRows: 2,
+      admin: { description: 'Voliteľné. Dve fotografie pod jedálnym lístkom.' },
+    },
   ],
 }

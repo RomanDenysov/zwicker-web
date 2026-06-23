@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { linkGroup } from '@/fields/linkGroup'
+
 export const ImageBanner: Block = {
   slug: 'imageBanner',
   interfaceName: 'ImageBannerBlock',
@@ -25,7 +27,8 @@ export const ImageBanner: Block = {
       localized: true,
       required: true,
       admin: {
-        description: 'Text v hranatých zátvorkách [takto] sa zobrazí kurzívou.',
+        description:
+          'Vykreslí sa VEĽKÝMI písmenami. Nový riadok = zalomenie. Text v [zátvorkách] bude kurzívou.',
       },
     },
     {
@@ -36,7 +39,27 @@ export const ImageBanner: Block = {
         { label: 'Malá (350px)', value: 'sm' },
         { label: 'Stredná (500px)', value: 'md' },
         { label: 'Veľká (700px)', value: 'lg' },
+        { label: 'Extra veľká (900px)', value: 'xl' },
       ],
     },
+    {
+      name: 'overlayPosition',
+      type: 'select',
+      label: 'Umiestnenie textu',
+      defaultValue: 'center',
+      options: [
+        { label: 'Na stred', value: 'center' },
+        { label: 'Vľavo (vertikálne na stred)', value: 'centerLeft' },
+        { label: 'Vpravo hore', value: 'topRight' },
+      ],
+    },
+    {
+      name: 'showCopyMark',
+      type: 'checkbox',
+      label: 'Zobraziť © vodoznak',
+      defaultValue: false,
+      admin: { description: 'Veľký © v pozadí (dekoratívny).' },
+    },
+    linkGroup({ appearances: false, overrides: { maxRows: 1 } }),
   ],
 }

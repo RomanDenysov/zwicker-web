@@ -28,15 +28,16 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
   return (
     <section
       data-theme="dark"
-      className="relative h-screen -mt-16 flex items-center justify-center overflow-hidden text-white text-center"
+      className="relative h-screen -mt-16 flex items-center justify-center overflow-hidden text-dark-foreground-soft text-center"
     >
       {media && typeof media === 'object' && (
         <ParallaxMedia
           resource={media}
-          imgClassName="object-cover brightness-[0.35] saturate-[0.7]"
+          imgClassName="object-cover brightness-[0.55] saturate-[0.85]"
           speed={0.35}
         />
       )}
+      <div className="absolute inset-0 bg-ink-900/12 pointer-events-none" style={{ backgroundColor: 'rgba(28,28,26,0.12)' }} />
       <div className="relative z-10 px-4">
         <div
           aria-label="Zwicker"

@@ -31,6 +31,12 @@ export const Pillars: Block = {
       admin: { initCollapsed: true },
       fields: [
         {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Obrázok',
+        },
+        {
           name: 'title',
           type: 'text',
           label: 'Nadpis',
@@ -43,6 +49,18 @@ export const Pillars: Block = {
           label: 'Text',
           localized: true,
           required: true,
+        },
+        {
+          name: 'ctaLabel',
+          type: 'text',
+          label: 'Text CTA',
+          localized: true,
+          defaultValue: 'Spoznajte nás',
+        },
+        {
+          name: 'ctaHref',
+          type: 'text',
+          label: 'Odkaz CTA',
         },
       ],
     },

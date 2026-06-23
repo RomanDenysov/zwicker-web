@@ -1,8 +1,9 @@
 import React from 'react'
 
-import type { MenuPreviewBlock as MenuPreviewBlockProps } from '@/payload-types'
+import type { MenuPreviewBlock as MenuPreviewBlockProps, Media as MediaType } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
+import { Media } from '@/components/Media'
 import { getDailyMenu } from '@/DailyMenu/getDailyMenu'
 
 export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
@@ -11,27 +12,29 @@ export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
   categoriesLimit,
   itemsPerCategory,
   links,
+  images,
 }) => {
   const menu = await getDailyMenu()
   const categories = (menu.categories || []).slice(0, categoriesLimit || 2)
   const [headingLine1, headingLine2] = (heading || '').split('\n')
+  const photos = (images || []).filter((i): i is MediaType => typeof i === 'object')
 
   const columns: (typeof categories)[] = [[], []]
   categories.forEach((cat, i) => columns[i % 2].push(cat))
 
   return (
-    <section className="py-28">
+    <section className="py-28 bg-background-warm">
       <div className="container">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-          <div>
+          <div className="max-w-[36rem]">
             {sectionLabel && <div className="section-label">{sectionLabel}</div>}
             {(headingLine1 || headingLine2) && (
-              <h2 className="text-h1">
+              <h2 className="text-h2">
                 {headingLine1}
                 {headingLine2 && (
                   <>
                     <br />
-                    <span className="italic text-primary">{headingLine2}</span>
+                    {headingLine2}
                   </>
                 )}
               </h2>
@@ -45,11 +48,26 @@ export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
             </div>
           )}
         </div>
-        <div className="grid gap-10 md:grid-cols-[1fr_1px_1fr]">
+        <div className="grid gap-12 md:grid-cols-[1fr_1px_1fr]">
           <MenuColumn categories={columns[0]} limit={itemsPerCategory || 3} />
-          <div className="hidden md:block bg-border" />
+          <div className="hidden md:block bg-foreground/10" />
           <MenuColumn categories={columns[1]} limit={itemsPerCategory || 3} />
         </div>
+        {photos.length > 0 && (
+          <div className="mt-16 flex flex-col gap-4 md:flex-row">
+            {photos.map((photo, i) => (
+              <div
+                key={photo.id}
+                className={i === 0 ? 'md:w-[840px] md:max-w-[60%]' : 'md:flex-1'}
+              >
+                <Media
+                  resource={photo}
+                  imgClassName="w-full h-[320px] md:h-[420px] object-cover rounded"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
@@ -63,30 +81,34 @@ function MenuColumn({
   limit: number
 }) {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-8">
       {categories.map((cat, i) => (
         <div key={cat.id || i}>
-          <h4 className="text-label text-primary border-b border-primary/15 pb-2 mb-5">
-            {cat.name}
-          </h4>
+          <h4 className="text-eyebrow mb-4">{cat.name}</h4>
           <div className="flex flex-col">
             {(cat.items || []).slice(0, limit).map((item, j) => (
               <div
                 key={item.id || j}
-                className="flex justify-between items-baseline py-3 border-b border-border"
+                className="flex flex-col gap-1 py-3.5 border-b border-foreground/8"
               >
-                <div className="font-medium">
-                  {item.name}
-                  {item.description && (
-                    <small className="block mt-1 text-xs font-light italic text-foreground-muted">
-                      {item.description}
-                    </small>
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[0.9375rem] font-medium uppercase tracking-[0.01em]">
+                    {item.name}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="flex-1 border-b border-dashed border-foreground-subtle/50 translate-y-[-3px]"
+                  />
+                  {typeof item.price === 'number' && (
+                    <span className="text-price whitespace-nowrap">
+                      {item.price.toFixed(2)} €
+                    </span>
                   )}
                 </div>
-                {typeof item.price === 'number' && (
-                  <span className="font-medium text-primary ml-6 whitespace-nowrap">
-                    {item.price.toFixed(2)} €
-                  </span>
+                {item.description && (
+                  <small className="text-xs font-light text-foreground-muted">
+                    {item.description}
+                  </small>
                 )}
               </div>
             ))}
