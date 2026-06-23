@@ -1,20 +1,32 @@
 const SITE_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
-  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-  'https://example.com'
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000')
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
-  exclude: ['/posts-sitemap.xml', '/pages-sitemap.xml', '/*', '/posts/*'],
+  exclude: [
+    '/posts-sitemap.xml',
+    '/pages-sitemap.xml',
+    '/rooms-sitemap.xml',
+    '/*',
+    '/posts/*',
+    '/izby/*',
+  ],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
-        disallow: '/admin/*',
+        disallow: ['/admin/*', '/next/*', '/api/*'],
       },
     ],
-    additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
+    additionalSitemaps: [
+      `${SITE_URL}/pages-sitemap.xml`,
+      `${SITE_URL}/posts-sitemap.xml`,
+      `${SITE_URL}/rooms-sitemap.xml`,
+    ],
   },
 }
