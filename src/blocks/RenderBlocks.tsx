@@ -14,7 +14,6 @@ import { DailyMenuImageBlock } from '@/blocks/DailyMenuImage/Component'
 import { EnSectionBlock } from '@/blocks/EnSection/Component'
 import { FamilyLunchCTABlock } from '@/blocks/FamilyLunchCTA/Component'
 import { FeaturedPostBlock } from '@/blocks/FeaturedPost/Component'
-import { FormBlock } from '@/blocks/Form/Component'
 import { GalleryStripBlock } from '@/blocks/GalleryStrip/Component'
 import { ImageBannerBlock } from '@/blocks/ImageBanner/Component'
 import { IntroBlock } from '@/blocks/Intro/Component'
@@ -41,7 +40,6 @@ const blockComponents = {
   enSection: EnSectionBlock,
   familyLunchCTA: FamilyLunchCTABlock,
   featuredPost: FeaturedPostBlock,
-  formBlock: FormBlock,
   galleryStrip: GalleryStripBlock,
   imageBanner: ImageBannerBlock,
   intro: IntroBlock,
@@ -58,7 +56,7 @@ const blockComponents = {
 
 // Legacy template blocks have no internal vertical spacing; wrap them.
 // Zwicker blocks handle their own section padding.
-const legacyBlocks = new Set(['archive', 'content', 'cta', 'mediaBlock', 'formBlock'])
+const legacyBlocks = new Set(['archive', 'content', 'cta', 'mediaBlock'])
 
 type Block = NonNullable<Page['layout']>[number]
 

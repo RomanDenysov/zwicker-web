@@ -14,7 +14,6 @@ import { DailyMenuImage } from '../../blocks/DailyMenuImage/config'
 import { EnSection } from '../../blocks/EnSection/config'
 import { FamilyLunchCTA } from '../../blocks/FamilyLunchCTA/config'
 import { FeaturedPost } from '../../blocks/FeaturedPost/config'
-import { FormBlock } from '../../blocks/Form/config'
 import { GalleryStrip } from '../../blocks/GalleryStrip/config'
 import { ImageBanner } from '../../blocks/ImageBanner/config'
 import { Intro } from '../../blocks/Intro/config'
@@ -117,7 +116,6 @@ export const Pages: CollectionConfig<'pages'> = {
                 Content,
                 MediaBlock,
                 Archive,
-                FormBlock,
               ],
               admin: {
                 initCollapsed: true,
