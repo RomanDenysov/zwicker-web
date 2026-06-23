@@ -10,6 +10,8 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import RichText from '@/components/RichText'
 import { RoomHero } from '@/heros/RoomHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { StructuredData } from '@/components/StructuredData'
+import { buildRoomGraph } from '@/utilities/structuredData'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -37,6 +39,7 @@ export default async function RoomPage({ params: paramsPromise }: Args) {
 
   return (
     <article className="pb-24">
+      <StructuredData data={buildRoomGraph(room)} />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
 
@@ -88,7 +91,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = '' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
   const room = await queryRoomBySlug({ slug: decodedSlug })
-  return generateMeta({ doc: room })
+  return generateMeta({ doc: room, collection: 'rooms' })
 }
 
 const queryRoomBySlug = cache(async ({ slug }: { slug: string }) => {

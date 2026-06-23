@@ -13,6 +13,8 @@ import type { Post } from '@/payload-types'
 import { PostHero } from '@/heros/PostHero'
 import { HoursStrip } from '@/components/HoursStrip'
 import { generateMeta } from '@/utilities/generateMeta'
+import { StructuredData } from '@/components/StructuredData'
+import { buildPostGraph } from '@/utilities/structuredData'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -55,6 +57,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   return (
     <article className="pb-16">
       <PageClient />
+      <StructuredData data={buildPostGraph(post)} />
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
@@ -85,7 +88,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
 
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: post, collection: 'posts' })
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {

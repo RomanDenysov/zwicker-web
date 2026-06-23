@@ -58,6 +58,8 @@ export default async function Page() {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: `Aktuality | Zwicker`,
+    description: 'Novinky, podujatia a sezónne menu reštaurácie a penziónu Zwicker.',
+    alternates: { canonical: '/posts' },
   }
 }

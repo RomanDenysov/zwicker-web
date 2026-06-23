@@ -303,6 +303,9 @@ export interface Post {
  */
 export interface Media {
   id: number;
+  /**
+   * Popíšte obrázok pre SEO a prístupnosť. Nechajte prázdne len pri čisto dekoratívnych obrázkoch.
+   */
   alt?: string | null;
   caption?: {
     root: {
@@ -2242,6 +2245,13 @@ export interface Setting {
    * Skopírujte iframe kód z Google Maps → Zdieľať → Vložiť mapu
    */
   googleMapsEmbed?: string | null;
+  streetAddress?: string | null;
+  addressLocality?: string | null;
+  postalCode?: string | null;
+  addressRegion?: string | null;
+  addressCountry?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   instagram?: string | null;
   facebook?: string | null;
   /**
@@ -2249,6 +2259,11 @@ export interface Setting {
    */
   defaultOgImage?: (number | null) | Media;
   siteDescription?: string | null;
+  /**
+   * Zobrazuje sa vo vyhľadávaní (schema.org priceRange)
+   */
+  priceRange?: string | null;
+  servesCuisine?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2342,10 +2357,19 @@ export interface SettingsSelect<T extends boolean = true> {
   address?: T;
   googleMapsUrl?: T;
   googleMapsEmbed?: T;
+  streetAddress?: T;
+  addressLocality?: T;
+  postalCode?: T;
+  addressRegion?: T;
+  addressCountry?: T;
+  latitude?: T;
+  longitude?: T;
   instagram?: T;
   facebook?: T;
   defaultOgImage?: T;
   siteDescription?: T;
+  priceRange?: T;
+  servesCuisine?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

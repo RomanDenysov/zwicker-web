@@ -71,6 +71,65 @@ export const Settings: GlobalConfig = {
               label: 'Google Maps embed iframe',
               admin: { description: 'Skopírujte iframe kód z Google Maps → Zdieľať → Vložiť mapu' },
             },
+            {
+              type: 'collapsible',
+              label: 'Štruktúrovaná adresa (pre SEO / mapy)',
+              admin: {
+                initCollapsed: true,
+                description:
+                  'Voliteľné. Vyplňte pre štruktúrované dáta (schema.org) - pomáha vo vyhľadávaní a mapách.',
+              },
+              fields: [
+                { name: 'streetAddress', type: 'text', label: 'Ulica a číslo' },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'addressLocality',
+                      type: 'text',
+                      label: 'Mesto / obec',
+                      admin: { width: '50%' },
+                    },
+                    { name: 'postalCode', type: 'text', label: 'PSČ', admin: { width: '50%' } },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'addressRegion',
+                      type: 'text',
+                      label: 'Kraj / región',
+                      admin: { width: '50%' },
+                    },
+                    {
+                      name: 'addressCountry',
+                      type: 'text',
+                      label: 'Krajina (kód, napr. SK)',
+                      defaultValue: 'SK',
+                      admin: { width: '50%' },
+                    },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'latitude',
+                      type: 'number',
+                      label: 'Zemepisná šírka (lat)',
+                      admin: { width: '50%' },
+                    },
+                    {
+                      name: 'longitude',
+                      type: 'number',
+                      label: 'Zemepisná dĺžka (lng)',
+                      admin: { width: '50%' },
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         {
@@ -98,6 +157,27 @@ export const Settings: GlobalConfig = {
               type: 'textarea',
               label: 'Predvolený popis webu',
               localized: true,
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'priceRange',
+                  type: 'text',
+                  label: 'Cenová úroveň (napr. €€)',
+                  admin: {
+                    width: '50%',
+                    description: 'Zobrazuje sa vo vyhľadávaní (schema.org priceRange)',
+                  },
+                },
+                {
+                  name: 'servesCuisine',
+                  type: 'text',
+                  label: 'Typ kuchyne (napr. Slovenská)',
+                  localized: true,
+                  admin: { width: '50%' },
+                },
+              ],
             },
           ],
         },

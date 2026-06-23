@@ -1,49 +1,51 @@
 import type { Metadata } from 'next'
 
-import type { Media, Page, Post, Room, Config } from '../payload-types'
+import type { Page, Post, Room } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
+import { getOgImageUrl } from './getOgImageUrl'
+import { getSettings } from '@/Settings/getSettings'
+import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, TITLE_SUFFIX } from './siteMeta'
 
-const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
-  const serverUrl = getServerSideURL()
+type Collection = 'pages' | 'posts' | 'rooms'
 
-  let url = serverUrl + '/website-template-OG.webp'
+const pathFor = (collection: Collection, slug?: string | null): string => {
+  if (!slug || slug === 'home') return '/'
+  if (collection === 'posts') return `/posts/${slug}`
+  if (collection === 'rooms') return `/izby/${slug}`
+  return `/${slug}`
+}
 
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
-
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
-  }
-
-  return url
+const titleFor = (rawTitle?: string | null): string => {
+  const title = rawTitle?.trim()
+  if (!title) return SITE_TITLE
+  return title.includes(SITE_NAME) ? title : `${title}${TITLE_SUFFIX}`
 }
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | Partial<Room> | null
+  collection?: Collection
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, collection = 'pages' } = args
+  const settings = await getSettings()
+  const serverUrl = getServerSideURL()
 
-  const ogImage = getImageURL(doc?.meta?.image)
-
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+  const ogImage = getOgImageUrl(doc?.meta?.image) || getOgImageUrl(settings.defaultOgImage)
+  const title = titleFor(doc?.meta?.title)
+  const description = doc?.meta?.description || settings.siteDescription || SITE_DESCRIPTION
+  const pathname = pathFor(collection, doc?.slug)
 
   return {
-    description: doc?.meta?.description,
-    openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-            },
-          ]
-        : undefined,
-      title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
-    }),
     title,
+    description,
+    alternates: { canonical: pathname },
+    openGraph: mergeOpenGraph({
+      type: collection === 'posts' ? 'article' : 'website',
+      title,
+      description,
+      url: serverUrl + pathname,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+    }),
   }
 }
