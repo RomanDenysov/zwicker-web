@@ -37,40 +37,50 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           speed={0.35}
         />
       )}
-      <div className="absolute inset-0 bg-ink-900/12 pointer-events-none" style={{ backgroundColor: 'rgba(28,28,26,0.12)' }} />
+      <div
+        className="absolute inset-0 bg-ink-900/12 pointer-events-none"
+        style={{ backgroundColor: 'rgba(28,28,26,0.12)' }}
+      />
       <div className="relative z-10 px-4">
-        <div
-          aria-label="Zwicker"
-          data-morphed={morphed}
-          className="brand-morph mb-6 font-extralight leading-none tabular-nums"
-        >
-          {LETTERS.map((char, i) => {
-            const collapses = char === 'I' || char === 'E'
-            if (char === 'C') {
+        <h1 className="mb-6">
+          <span className="sr-only">Zwicker - Reštaurácia a penzión</span>
+          <span
+            aria-hidden="true"
+            data-morphed={morphed}
+            className="brand-morph block font-extralight leading-none tabular-nums"
+          >
+            {LETTERS.map((char, i) => {
+              const collapses = char === 'I' || char === 'E'
+              if (char === 'C') {
+                return (
+                  <span key={i} className="brand-letter brand-c" aria-hidden="true">
+                    <span className="brand-c-original">C</span>
+                    <span className="brand-c-mark copy-mark">©</span>
+                  </span>
+                )
+              }
               return (
-                <span key={i} className="brand-letter brand-c" aria-hidden="true">
-                  <span className="brand-c-original">C</span>
-                  <span className="brand-c-mark copy-mark">©</span>
+                <span
+                  key={i}
+                  aria-hidden="true"
+                  className={`brand-letter${collapses ? ' brand-collapse' : ''}`}
+                >
+                  {char}
                 </span>
               )
-            }
-            return (
-              <span
-                key={i}
-                aria-hidden="true"
-                className={`brand-letter${collapses ? ' brand-collapse' : ''}`}
-              >
-                {char}
-              </span>
-            )
-          })}
-        </div>
+            })}
+          </span>
+        </h1>
         {richText && (
           <div
             className="animate-fade-up opacity-0"
             style={{ animationDelay: '2.2s', animationFillMode: 'forwards' }}
           >
-            <RichText data={richText} enableGutter={false} className="prose-invert max-w-xl mx-auto" />
+            <RichText
+              data={richText}
+              enableGutter={false}
+              className="prose-invert max-w-xl mx-auto"
+            />
           </div>
         )}
         {Array.isArray(links) && links.length > 0 && (

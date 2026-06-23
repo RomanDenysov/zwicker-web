@@ -27,7 +27,11 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      //required: true,
+      label: 'Alt text',
+      admin: {
+        description:
+          'Popíšte obrázok pre SEO a prístupnosť. Nechajte prázdne len pri čisto dekoratívnych obrázkoch.',
+      },
     },
     {
       name: 'caption',
