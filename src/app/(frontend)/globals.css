@@ -44,7 +44,8 @@
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 86rem;
   --font-mono: var(--font-geist-mono);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bagoss), 'Bagoss Condensed', ui-sans-serif, sans-serif;
 }
 
 @layer utilities {
@@ -87,18 +88,30 @@
 }
 
 :root {
-  /* Raw palette - single source of truth */
+  /* Raw palette - aligned with Figma redesign (679:785) */
   --color-stone-100: #edeae4;
   --color-stone-200: #d5d2ca;
   --color-stone-300: #cbc8bf;
   --color-stone-400: #b8b5ad;
   --color-stone-500: #9e9b93;
   --color-stone-600: #7a7870;
+  --color-cream-50: #f5f4f0; /* fg/on-dark */
+  --color-cream-100: #f2ede4; /* hero text, soft cream */
+  --color-warm-100: #d2cac0; /* Restaurant section bg, warm beige */
+  --color-ink-900: #1c1c1a; /* fg/default */
+  --color-ink-800: #2c2c28;
+  /* Brand accents (Figma) */
+  --color-olive-500: #a09976; /* HoursBar + Pillars bg */
+  --color-olive-400: #b3ad8c;
+  --color-olive-600: #847e62;
+  --color-sage-300: #c4d2c5; /* Chef's Table heading, sage foreground on dark */
+  --color-sage-200: #e5f0cb; /* Pillar number labels, pale yellow-green */
+  --color-brown-600: #603d24; /* Rooms section bg, price text */
+  --color-brown-500: #7a4f30;
+  --color-brown-400: #8d6240;
+  /* Legacy terracotta (kept for posts/blog, gradually phasing out) */
   --color-terracotta-400: #c97050;
   --color-terracotta-500: #b85c38;
-  --color-ink-900: #1c1c1a;
-  --color-ink-800: #2c2c28;
-  --color-cream-50: #f5f4f0;
 
   /* shadcn semantic tokens mapped to Zwicker palette */
   --background: var(--color-stone-300);
@@ -107,31 +120,40 @@
   --card-foreground: var(--color-ink-900);
   --popover: var(--color-cream-50);
   --popover-foreground: var(--color-ink-900);
-  --primary: var(--color-terracotta-500);
+  --primary: var(--color-olive-500);
   --primary-foreground: var(--color-cream-50);
   --secondary: var(--color-stone-200);
   --secondary-foreground: var(--color-ink-900);
   --muted: var(--color-stone-200);
   --muted-foreground: var(--color-stone-600);
-  --accent: var(--color-stone-200);
-  --accent-foreground: var(--color-ink-900);
+  --accent: var(--color-brown-600);
+  --accent-foreground: var(--color-cream-50);
   --destructive: oklch(57.7% 0.245 27.325deg);
   --destructive-foreground: var(--color-cream-50);
   --border: rgba(28, 28, 26, 0.08);
   --input: rgba(28, 28, 26, 0.15);
-  --ring: var(--color-terracotta-500);
+  --ring: var(--color-olive-500);
 
   /* Zwicker additions (not in shadcn defaults) */
-  --primary-light: var(--color-terracotta-400);
+  --primary-light: var(--color-olive-400);
+  --primary-dark: var(--color-olive-600);
+  --price: var(--color-brown-600); /* menu prices */
   --background-muted: var(--color-stone-200);
   --background-subtle: var(--color-stone-400);
+  --background-warm: var(--color-warm-100); /* Restaurant section bg */
+  --background-olive: var(--color-olive-500); /* HoursBar, Pillars */
+  --background-brown: var(--color-brown-600); /* Rooms */
   --foreground-muted: var(--color-stone-600);
   --foreground-subtle: var(--color-stone-500);
+  --foreground-sage: var(--color-sage-300);
   --border-strong: rgba(28, 28, 26, 0.15);
   --dark: var(--color-ink-900);
   --dark-soft: var(--color-ink-800);
   --dark-foreground: var(--color-cream-50);
+  --dark-foreground-soft: var(--color-cream-100);
   --dark-muted: rgba(255, 255, 255, 0.4);
+  --dark-strong: rgba(255, 255, 255, 0.7);
+  --dark-sub: rgba(255, 255, 255, 0.55);
   --dark-subtle: rgba(255, 255, 255, 0.15);
   --dark-border: rgba(255, 255, 255, 0.06);
 
@@ -153,6 +175,8 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-price: var(--price);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -167,14 +191,23 @@
   --color-ring: var(--ring);
   --color-background-muted: var(--background-muted);
   --color-background-subtle: var(--background-subtle);
+  --color-background-warm: var(--background-warm);
+  --color-background-olive: var(--background-olive);
+  --color-background-brown: var(--background-brown);
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
+  --color-foreground-sage: var(--foreground-sage);
   --color-dark: var(--dark);
   --color-dark-soft: var(--dark-soft);
   --color-dark-foreground: var(--dark-foreground);
+  --color-dark-foreground-soft: var(--dark-foreground-soft);
   --color-dark-muted: var(--dark-muted);
+  --color-dark-strong: var(--dark-strong);
+  --color-dark-sub: var(--dark-sub);
   --color-dark-subtle: var(--dark-subtle);
   --color-dark-border: var(--dark-border);
+  --color-sage-200: var(--color-sage-200);
+  --color-sage-300: var(--color-sage-300);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
@@ -212,40 +245,63 @@
 }
 
 @layer components {
-  /* Typography scale - matches staff primitives.css */
+  /* Typography scale - aligned with Figma redesign */
   .text-display {
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 200;
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 12vw, 11.5rem); /* hero ZW©KR ~186px */
+    font-weight: 400; /* Figma uses Bagoss Light; not licensed, Regular is closest */
     line-height: 1;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.06em;
   }
   .text-h1 {
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem); /* section headings ~80px */
+    font-weight: 400; /* Figma uses Bagoss Light; falls back to Regular */
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .text-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.4vw, 3rem); /* restaurant header ~48px */
+    font-weight: 400;
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
-  .text-h2 {
-    font-size: clamp(1.6rem, 3vw, 2.5rem);
-    font-weight: 400;
-    line-height: 1.2;
-  }
   .text-h3 {
-    font-size: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 1.125rem; /* pillar title ~18px */
     font-weight: 500;
     line-height: 1.3;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
   .text-label {
-    font-size: 0.65rem;
+    font-family: var(--font-display);
+    font-size: 0.625rem; /* ~10px */
     font-weight: 500;
     letter-spacing: 0.25em;
     text-transform: uppercase;
   }
   .text-nav {
-    font-size: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 0.6875rem; /* ~11px - CTA labels */
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+  .text-price {
+    font-size: 0.9375rem; /* ~15px - stays on DM Sans (--font-sans) */
+    font-weight: 500;
+    color: var(--price);
+    font-feature-settings: 'tnum';
+  }
+  .text-eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.65rem; /* ~10.4px */
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--foreground-muted);
   }
 
   /* Section label: "— O nás" pattern */
@@ -287,14 +343,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-display);
 }
 .brand-letter {
   display: inline-block;
   overflow: hidden;
   text-align: center;
-  font-size: clamp(4rem, 10vw, 11rem);
+  font-size: clamp(4rem, 12vw, 11.625rem); /* ~186px on desktop */
   inline-size: 1.1em;
-  margin-inline: clamp(0.25rem, 0.8vw, 1rem);
+  margin-inline: clamp(0.5rem, 2vw, 2rem); /* tracking ~126px */
+  color: var(--dark-foreground-soft);
   transition:
     inline-size 1.4s cubic-bezier(0.22, 1, 0.36, 1),
     margin-inline 1.4s cubic-bezier(0.22, 1, 0.36, 1),

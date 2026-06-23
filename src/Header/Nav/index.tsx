@@ -1,8 +1,6 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
-import { SearchIcon } from 'lucide-react'
 
 import type { Header as HeaderType } from '@/payload-types'
 
@@ -24,13 +22,6 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
           </li>
         ))}
       </ul>
-      <Link
-        href="/search"
-        className="opacity-80 hover:opacity-100 transition-opacity"
-        aria-label="Hľadať"
-      >
-        <SearchIcon className="w-4 h-4" />
-      </Link>
     </nav>
   )
 }

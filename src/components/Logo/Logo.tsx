@@ -2,6 +2,7 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 
 type Size = 'sm' | 'md' | 'lg'
+type Variant = 'wordmark' | 'mark'
 
 const sizeClass: Record<Size, string> = {
   sm: 'text-sm tracking-[0.3em]',
@@ -9,16 +10,46 @@ const sizeClass: Record<Size, string> = {
   lg: 'text-2xl tracking-[0.35em]',
 }
 
+const markSize: Record<Size, number> = {
+  sm: 24,
+  md: 34,
+  lg: 48,
+}
+
 type Props = {
   size?: Size
+  /** `wordmark` renders the ZW©KR lettering, `mark` renders the circular ©-monogram. */
+  variant?: Variant
   className?: string
 }
 
-export const Logo = ({ size = 'md', className }: Props) => (
-  <span
-    aria-label="Zwicker"
-    className={cn('font-medium leading-none select-none', sizeClass[size], className)}
-  >
-    ZW<span className="copy-mark">©</span>KR
-  </span>
-)
+export const Logo = ({ size = 'md', variant = 'wordmark', className }: Props) => {
+  if (variant === 'mark') {
+    return (
+      <svg
+        aria-label="Zwicker"
+        role="img"
+        width={markSize[size]}
+        height={markSize[size]}
+        viewBox="0 0 50 50"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={cn('select-none', className)}
+      >
+        <path
+          fill="currentColor"
+          d="M24.949 49.837C10.309 49.837 0 39.528 0 24.888C0 10.248 10.309 0 24.949 0C39.589 0 49.837 10.248 49.837 24.888C49.837 39.528 39.589 49.837 24.949 49.837ZM24.949 45.933C36.966 45.933 45.384 37.21 45.384 24.888C45.384 12.566 36.966 3.904 24.949 3.904C12.871 3.904 4.453 12.566 4.453 24.888C4.453 37.21 12.871 45.933 24.949 45.933ZM25.193 39.162C17.568 39.162 13.115 33.184 13.115 25.498C13.115 17.69 17.69 10.858 25.193 10.858C30.256 10.858 34.099 13.542 35.563 18.91L31.72 21.411C30.988 17.263 28.853 14.762 25.193 14.762C20.374 14.762 18.117 20.191 18.117 25.315C18.117 30.561 20.008 35.319 25.193 35.319C28.914 35.319 31.354 32.33 32.208 28.853L36.051 31.415C33.794 35.868 30.378 39.162 25.193 39.162Z"
+        />
+      </svg>
+    )
+  }
+
+  return (
+    <span
+      aria-label="Zwicker"
+      className={cn('font-display font-medium leading-none select-none', sizeClass[size], className)}
+    >
+      ZW<span className="copy-mark">©</span>KR
+    </span>
+  )
+}

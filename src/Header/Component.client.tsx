@@ -41,7 +41,7 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
     >
       <div className="container h-full flex items-center justify-between">
         <Link href="/" aria-label="Zwicker - domov">
-          <Logo />
+          <Logo variant="mark" />
         </Link>
         <HeaderNav data={data} />
       </div>
