@@ -1,5 +1,7 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest } from 'payload'
 
+import { homeMediaSpecs, uploadMedia } from './media'
+
 // ---------------------------------------------------------------------------
 // Lexical richText helpers
 // ---------------------------------------------------------------------------
@@ -56,9 +58,7 @@ const collectionsToClear: CollectionSlug[] = [
   'rooms',
   'posts',
   'categories',
-  'forms',
-  'form-submissions',
-  'search',
+  'media',
 ]
 
 // ---------------------------------------------------------------------------
@@ -108,12 +108,12 @@ export const seed = async ({
     context: { disableRevalidate: true },
     data: {
       openingHours: [
-        { days: 'Po - Pi', hours: '8:00 - 21:00' },
-        { days: 'So', hours: '9:00 - 21:00' },
-        { days: 'Ne', hours: '9:00 - 16:00' },
+        { days: 'Po - Pia', hours: '8:00 - 21:00' },
+        { days: 'Sobota', hours: '9:00 - 21:00' },
+        { days: 'Nedeľa', hours: '9:00 - 16:00' },
       ],
       closedNote: '',
-      phone: '+421 51 286 61 66',
+      phone: '051 286 61 66',
       email: 'penzion@zwicker.sk',
       reservationEmail: 'office@zwicker.sk',
       address: 'Bardejovská 48/B\nPrešov - Ľubotice, 080 06',
@@ -202,6 +202,10 @@ export const seed = async ({
     rooms.push({ id: doc.id as number })
   }
 
+  // --- Media ---------------------------------------------------------------
+  payload.logger.info('— Uploading homepage photography (this can take a minute)...')
+  const media = await uploadMedia(payload, req, homeMediaSpecs)
+
   // --- Pages ---------------------------------------------------------------
   payload.logger.info('— Seeding Pages...')
 
@@ -217,39 +221,91 @@ export const seed = async ({
       _status: 'published',
       hero: {
         type: 'highImpact',
+        media: media.heroFood,
       },
       layout: [
+        // 1. Horses banner — © watermark
+        {
+          blockType: 'imageBanner',
+          image: media.restaurant,
+          overlayHeading: 'Jedlo ktoré\nby malo\nmať svoj\ncopywright',
+          height: 'xl',
+          overlayPosition: 'centerLeft',
+          showCopyMark: true,
+          links: [
+            { link: { type: 'custom', label: 'Spoznajte nás', url: '/jedalny-listok' } },
+          ],
+        },
+        // 2. Pillars — Reštaurácia / Penzión / Svadby
         {
           blockType: 'pillars',
           sectionLabel: 'Čo nás robí iným©',
           background: 'dark',
           pillars: [
             {
-              title: 'Poloha',
-              body:
-                'Reštaurácia a penzión Zwicker sa nachádza 5 minút autom od centra Prešova a je súčasťou jedinečného jazdeckého areálu Park prírody.',
-            },
-            {
-              title: 'Jazdecký areál',
-              body:
-                'Zwicker sa nesie v duchu prešovskej koniarskej tradície. Ponúkame jazdenie na koňoch, jazdeckú školu a ustajnenie.',
-            },
-            {
-              title: 'Penzión',
-              body:
-                'Štyri komfortne zariadené izby penziónu Zwicker dýchajú pocitom domova. O Vašu relaxáciu sa postará aj wellness so saunami, vírivkou a ochladzovacou kaďou.',
-            },
-            {
+              image: media.restaurant,
               title: 'Reštaurácia',
               body:
-                'Reštaurácia ponúka tradičnú slovenskú kuchyňu v modernom šate. Varíme poctivé jedlá z najkvalitnejších surovín a uprednostňujeme lokálnych dodávateľov.',
+                'Tradičná slovenská kuchyňa v modernom šate. Varíme poctivé jedlá z najkvalitnejších surovín a uprednostňujeme lokálnych dodávateľov.',
+              ctaLabel: 'Jedálny lístok',
+              ctaHref: '/jedalny-listok',
+            },
+            {
+              image: media.pension,
+              title: 'Penzión',
+              body:
+                'Štyri komfortne zariadené izby penziónu Zwicker dýchajú pocitom domova. O Vašu relaxáciu sa postará aj wellness so saunami a vírivkou.',
+              ctaLabel: 'Ubytovanie',
+              ctaHref: '/ubytovanie',
+            },
+            {
+              image: media.wedding,
+              title: 'Svadby',
+              body:
+                'Výnimočné miesto pre výnimočný deň. Svadby a oslavy v jedinečnom prostredí jazdeckého areálu Park prírody.',
+              ctaLabel: 'Svadba v Zwickeri',
+              ctaHref: 'https://svadbavzwickeri.sk/',
             },
           ],
         },
+        // 3. Chef's Table
+        {
+          blockType: 'chefsHighlight',
+          sectionLabel: 'Degustačné večere',
+          logo: '©HEF\'S TABLE',
+          heading: 'Chef\'s Table',
+          quote: 'Spomaľte. Každý chod je okamih, ktorý sa už nezopakuje.',
+          body:
+            'Koncept degustačných večerí, pripravených našimi šéfkuchármi - Michalom „Majkym" Birošom a Lukášom „Jardo" Šepeľom. Rezervácia je potrebná vopred.',
+          image: media.chefDark,
+          details: [
+            { value: '65 €', label: '5-chodové menu / osoba' },
+            { value: '2× mesačne', label: 'Soboty, na rezerváciu' },
+          ],
+          badge: '© CHEF\'S TABLE',
+          links: [
+            {
+              link: {
+                type: 'custom',
+                label: 'Rezervovať Chef\'s Table',
+                url: '/chefs-table',
+              },
+            },
+          ],
+        },
+        // 4. Gallery collage (warm)
+        {
+          blockType: 'galleryStrip',
+          sectionLabel: 'Galéria',
+          variant: 'collage',
+          background: 'warm',
+          images: [media.chef1, media.chef2, media.plate, media.chef4, media.food],
+        },
+        // 5. Restaurant menu preview + photo pair
         {
           blockType: 'menuPreview',
-          sectionLabel: 'Jedálny lístok',
-          heading: 'Chute©\nsezóny',
+          sectionLabel: 'Reštaurácia',
+          heading: 'Obed, ktorý chutí\nako večerný fine-dining.',
           categoriesLimit: 2,
           itemsPerCategory: 3,
           links: [
@@ -261,64 +317,53 @@ export const seed = async ({
               },
             },
           ],
+          images: [media.restaurant, media.chef4],
         },
+        // 6. Interiér banner — overlay top-right
         {
-          blockType: 'chefsHighlight',
-          sectionLabel: 'Degustačné večere',
-          logo: 'CHEF\'S TABLE',
-          heading: 'Spomaliť. Ochutnávať. Vychutnávať.',
-          quote:
-            'Koncept degustačných večerí, pripravených našimi šéfkuchármi - Michalom „Majkym" Birošom a Lukášom „Jardo" Šepeľom.',
-          body:
-            'Chef\'s Table zvykneme pripravovať dvakrát v mesiaci v sobotu. Rezervácia je potrebná vopred.',
-          details: [
-            { value: '5', label: 'chodov' },
-            { value: '65 €', label: 'na osobu' },
-            { value: '2×', label: 'mesačne' },
-          ],
-          badge: '© CHEF\'S TABLE',
+          blockType: 'imageBanner',
+          image: media.interier,
+          overlayHeading: 'Prostredie\nktoré si získa\nnejedného\nhosťa',
+          height: 'xl',
+          overlayPosition: 'topRight',
           links: [
-            {
-              link: {
-                type: 'custom',
-                label: 'Viac o Chef\'s Table',
-                url: '/chefs-table',
-              },
-            },
+            { link: { type: 'custom', label: 'Spoznajte viac', url: '/ubytovanie' } },
           ],
         },
+        // 7. Rooms
         {
           blockType: 'roomsGrid',
           sectionLabel: 'Ubytovanie',
-          heading: 'Naše izby',
-          body: 'Štyri komfortne zariadené izby penziónu Zwicker dýchajú pocitom domova.',
+          heading: 'Penzión Zwi©ker',
+          body:
+            'Štyri komfortne zariadené izby dýchajú pocitom domova. Wellness so saunami, vírivkou a ochladzovacou kaďou.',
           rooms: rooms.map((r) => r.id),
           links: [
             {
               link: {
                 type: 'custom',
-                label: 'Všetky izby',
-                url: '/ubytovanie',
+                label: 'Zistiť dostupnosť',
+                newTab: true,
+                url: 'https://booking.previo.app/',
               },
             },
           ],
         },
+        // 8. Gallery scroll (brown)
         {
-          blockType: 'familyLunchCTA',
-          sectionLabel: 'Rodinný obed',
-          heading: 'Spoločný© rodinný obed',
-          body:
-            'Sadnúť si spolu za jeden stôl, nič nemusieť, len ochutnávať a užívať si spoločný čas s rodinou, blízkymi či priateľmi.',
-          courses: [
-            { label: 'Predjedlo' },
-            { label: 'Polievka' },
-            { label: 'Hlavné jedlo' },
-            { label: 'Dezert' },
+          blockType: 'galleryStrip',
+          sectionLabel: 'Zo Zwickeru',
+          variant: 'scroll',
+          background: 'brown',
+          scrollSpeed: 'normal',
+          images: [
+            media.venue1,
+            media.venue2,
+            media.venue3,
+            media.venue4,
+            media.venue5,
+            media.venue6,
           ],
-          note: 'Minimálne 4 osoby. Rezervujte si najneskôr 24 hodín vopred.',
-          priceAdult: '39 €',
-          priceAdultLabel: '/ dospelá osoba',
-          priceChild: '17 € / dieťa do 10 r.',
         },
       ],
       meta: {
