@@ -6,7 +6,6 @@ export const ChefsCourseMenu: Block = {
   labels: { singular: 'Degustačné menu (chody)', plural: 'Degustačné menu' },
   admin: { group: 'Reštaurácia' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     { name: 'image', type: 'upload', relationTo: 'media' },
     {
       name: 'courses',

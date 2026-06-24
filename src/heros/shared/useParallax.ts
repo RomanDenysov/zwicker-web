@@ -4,7 +4,10 @@ import { useEffect, useRef } from 'react'
 
 import { prefersReducedMotion } from '@/utilities/prefersReducedMotion'
 
-export function useParallax<T extends HTMLElement = HTMLDivElement>(speed = 0.25) {
+export function useParallax<T extends HTMLElement = HTMLDivElement>(
+  speed = 0.25,
+  anchor: 'top' | 'center' = 'top',
+) {
   const ref = useRef<T | null>(null)
 
   useEffect(() => {
@@ -17,7 +20,14 @@ export function useParallax<T extends HTMLElement = HTMLDivElement>(speed = 0.25
     const update = () => {
       raf = 0
       const rect = el.getBoundingClientRect()
-      const offset = -rect.top * speed
+      // top: 0 when the element top meets the viewport top (full-height heros).
+      // center: 0 when the element is centered in the viewport (in-page sections),
+      // which keeps the drift symmetric so scaled edges never peek into view.
+      const viewportH = window.innerHeight || document.documentElement.clientHeight
+      const offset =
+        anchor === 'center'
+          ? (viewportH / 2 - (rect.top + rect.height / 2)) * speed
+          : -rect.top * speed
       el.style.setProperty('--parallax-y', `${offset.toFixed(2)}px`)
     }
 
@@ -46,7 +56,7 @@ export function useParallax<T extends HTMLElement = HTMLDivElement>(speed = 0.25
       window.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [speed])
+  }, [speed, anchor])
 
   return ref
 }

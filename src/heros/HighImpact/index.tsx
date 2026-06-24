@@ -36,7 +36,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
   return (
     <section
       data-theme="dark"
-      className="relative h-screen -mt-16 flex items-center justify-center overflow-hidden bg-black text-dark-foreground-soft text-center"
+      className="relative h-screen -mt-[var(--header-height)] flex items-center justify-center overflow-hidden bg-black text-dark-foreground-soft text-center"
     >
       {media && typeof media === 'object' && (
         <ParallaxMedia

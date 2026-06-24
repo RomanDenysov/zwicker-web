@@ -40,6 +40,7 @@ export const ImageBanner: Block = {
         { label: 'Stredná (500px)', value: 'md' },
         { label: 'Veľká (700px)', value: 'lg' },
         { label: 'Extra veľká (900px)', value: 'xl' },
+        { label: 'Na celú obrazovku', value: 'full' },
       ],
     },
     {
@@ -49,7 +50,7 @@ export const ImageBanner: Block = {
       defaultValue: 'center',
       options: [
         { label: 'Na stred', value: 'center' },
-        { label: 'Vľavo (vertikálne na stred)', value: 'centerLeft' },
+        { label: 'Vľavo hore', value: 'centerLeft' },
         { label: 'Vpravo hore', value: 'topRight' },
       ],
     },

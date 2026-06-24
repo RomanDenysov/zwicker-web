@@ -3,7 +3,6 @@ import React from 'react'
 import type { FamilyLunchCTABlock as FamilyLunchCTABlockProps } from '@/payload-types'
 
 export const FamilyLunchCTABlock: React.FC<FamilyLunchCTABlockProps> = ({
-  sectionLabel,
   heading,
   body,
   courses,
@@ -14,11 +13,6 @@ export const FamilyLunchCTABlock: React.FC<FamilyLunchCTABlockProps> = ({
 }) => (
   <section data-theme="dark" className="py-28 bg-dark text-white text-center">
     <div className="container max-w-2xl">
-      {sectionLabel && (
-        <div className="section-label section-label-dark section-label-center">
-          {sectionLabel}
-        </div>
-      )}
       <h2 className="text-h1 mt-5">{heading}</h2>
       {body && <p className="text-base text-white/40 leading-relaxed mt-6">{body}</p>}
       {courses && courses.length > 0 && (

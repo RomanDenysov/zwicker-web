@@ -3,11 +3,12 @@ import React from 'react'
 
 import type { Room, RoomsGridBlock as RoomsGridBlockProps } from '@/payload-types'
 
+import { Container, contentWidth } from '@/components/Container'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
+import { cn } from '@/utilities/ui'
 
 export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
-  sectionLabel,
   heading,
   body,
   rooms,
@@ -18,11 +19,8 @@ export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
 
   return (
     <section data-theme="dark" className="py-28 bg-background-brown text-dark-foreground">
-      <div className="container">
-        <div className="mb-12 max-w-[30rem]">
-          {sectionLabel && (
-            <div className="section-label section-label-dark">{sectionLabel}</div>
-          )}
+      <Container>
+        <div className={cn('mb-12', contentWidth.narrow)}>
           {heading && (
             <h2 className="text-h1 text-foreground-sage tracking-[0.01em] uppercase font-extralight">
               {heading}
@@ -44,7 +42,7 @@ export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
             ))}
           </div>
         )}
-      </div>
+      </Container>
     </section>
   )
 }

@@ -27,10 +27,10 @@ export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText 
   return (
     <section
       data-theme="dark"
-      className="relative h-[240px] -mt-16 bg-dark text-dark-foreground flex items-center"
+      className="relative h-[240px] -mt-[var(--header-height)] bg-dark text-dark-foreground flex items-center"
     >
       <div className="container">
-        <div className="max-w-[48rem] pt-16 pb-6">
+        <div className="max-w-[48rem] pt-[var(--header-height)] pb-6">
           {children || (richText && <RichText data={richText} enableGutter={false} className="prose-invert" />)}
         </div>
       </div>

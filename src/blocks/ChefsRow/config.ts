@@ -6,7 +6,6 @@ export const ChefsRow: Block = {
   labels: { singular: 'Šéfkuchári', plural: 'Šéfkuchári' },
   admin: { group: 'Reštaurácia' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     {
       name: 'chefs',
       type: 'array',

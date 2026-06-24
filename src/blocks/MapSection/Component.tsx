@@ -10,7 +10,6 @@ function extractIframeSrc(html: string): string | null {
 }
 
 export const MapSectionBlock: React.FC<MapSectionBlockProps> = async ({
-  sectionLabel,
   address,
   embedSource,
   customEmbed,
@@ -24,7 +23,6 @@ export const MapSectionBlock: React.FC<MapSectionBlockProps> = async ({
   return (
     <section className="py-20">
       <div className="container">
-        {sectionLabel && <div className="section-label mb-8">{sectionLabel}</div>}
         <div className="w-full h-[400px] bg-background-muted rounded overflow-hidden">
           {src ? (
             <iframe

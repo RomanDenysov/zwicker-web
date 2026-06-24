@@ -24,7 +24,6 @@ const collageSlots = [
 ]
 
 export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
-  sectionLabel,
   images,
   variant,
   background,
@@ -40,22 +39,16 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
     const slotted = items.slice(0, collageSlots.length)
     return (
       <section className={cn('py-28', bg)} {...(isBrown ? { 'data-theme': 'dark' } : {})}>
-        <div className="container">
-          {sectionLabel && (
-            <div className={cn('mb-10', isBrown ? 'section-label-dark' : 'section-label')}>
-              {sectionLabel}
+        {/* Edge-to-edge collage: only the gap-sized gutter at the viewport edges. */}
+        <div className="grid grid-cols-12 gap-3 md:gap-4 px-3 md:px-4">
+          {slotted.map((img, i) => (
+            <div key={img.id} className={cn('overflow-hidden rounded', collageSlots[i])}>
+              <Media
+                resource={img}
+                imgClassName="w-full h-full object-cover saturate-[0.85] hover:saturate-100 hover:scale-[1.02] transition-[filter,transform] duration-500"
+              />
             </div>
-          )}
-          <div className="grid grid-cols-12 gap-3 md:gap-4">
-            {slotted.map((img, i) => (
-              <div key={img.id} className={cn('overflow-hidden rounded', collageSlots[i])}>
-                <Media
-                  resource={img}
-                  imgClassName="w-full h-full object-cover saturate-[0.85] hover:saturate-100 hover:scale-[1.02] transition-[filter,transform] duration-500"
-                />
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </section>
     )
@@ -71,11 +64,6 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
       className={cn('py-28 overflow-hidden', bg)}
       {...(isBrown ? { 'data-theme': 'dark' } : {})}
     >
-      {sectionLabel && (
-        <div className={cn('container mb-10', isBrown ? 'section-label-dark' : 'section-label')}>
-          {sectionLabel}
-        </div>
-      )}
       <div
         className="flex gap-3 animate-[gallerySlide_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none"
         style={{ animationDuration: speeds[scrollSpeed || 'normal'] }}

@@ -6,7 +6,6 @@ export const Steps: Block = {
   labels: { singular: 'Kroky (how it works)', plural: 'Kroky' },
   admin: { group: 'Obsah' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     { name: 'heading', type: 'text', label: 'Nadpis', localized: true },
     {
       name: 'steps',

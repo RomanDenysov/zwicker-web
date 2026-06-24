@@ -7,12 +7,6 @@ export const GalleryStrip: Block = {
   admin: { group: 'Obsah' },
   fields: [
     {
-      name: 'sectionLabel',
-      type: 'text',
-      label: 'Štítok sekcie',
-      localized: true,
-    },
-    {
       name: 'variant',
       type: 'select',
       label: 'Rozloženie',

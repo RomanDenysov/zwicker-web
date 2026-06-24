@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { Container } from '@/components/Container'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { getSettings } from '@/Settings/getSettings'
@@ -20,7 +21,7 @@ export async function Footer() {
       data-theme="dark"
       className="mt-auto bg-dark text-dark-foreground"
     >
-      <div className="container py-20">
+      <Container className="py-20">
         <div className="grid gap-14 md:grid-cols-[1.2fr_1fr_1fr] pb-14 border-b border-dark-border">
           <div>
             <Logo size="lg" className="block mb-5" />
@@ -72,7 +73,7 @@ export async function Footer() {
             )}
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

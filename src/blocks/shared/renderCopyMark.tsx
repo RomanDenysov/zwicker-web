@@ -2,7 +2,8 @@ import React from 'react'
 
 /**
  * Splits a string on the `©` character and wraps each occurrence in
- * `<span className="copy-mark">©</span>` so it picks up the brand accent color.
+ * `<span className="copy-mark">©</span>`. The mark inherits the surrounding
+ * text color (see `.copy-mark` in globals.css).
  */
 export function renderCopyMark(text: string): React.ReactNode {
   const parts = text.split('©')

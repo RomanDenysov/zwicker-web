@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 
 import type { Header } from '@/payload-types'
 
+import { Container } from '@/components/Container'
 import { Logo } from '@/components/Logo/Logo'
 import { cn } from '@/utilities/ui'
 import { HeaderNav } from './Nav'
@@ -41,18 +42,18 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
     <header
       {...(transparent ? { 'data-theme': 'dark' } : {})}
       className={cn(
-        'sticky top-0 z-50 h-16 transition-[background,border,color] duration-300',
+        'sticky top-0 z-50 h-[var(--header-height)] transition-[background,border,color] duration-300',
         transparent
           ? 'bg-transparent border-b border-transparent text-white'
           : 'bg-background/90 backdrop-blur border-b border-border text-foreground',
       )}
     >
-      <div className="container h-full flex items-center justify-between">
+      <Container className="h-full flex items-center justify-between">
         <Link href="/" aria-label="Zwicker - domov">
           <Logo variant="mark" />
         </Link>
         <HeaderNav data={data} />
-      </div>
+      </Container>
     </header>
   )
 }

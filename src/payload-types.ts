@@ -474,7 +474,6 @@ export interface User {
  * via the `definition` "IntroBlock".
  */
 export interface IntroBlock {
-  sectionLabel?: string | null;
   /**
    * Použite znak © na zvýraznenie časti textu značkovou farbou.
    */
@@ -515,7 +514,6 @@ export interface IntroBlock {
  * via the `definition` "PillarsBlock".
  */
 export interface PillarsBlock {
-  sectionLabel?: string | null;
   background?: ('dark' | 'light') | null;
   pillars?:
     | {
@@ -542,7 +540,7 @@ export interface ImageBannerBlock {
    * Vykreslí sa VEĽKÝMI písmenami. Nový riadok = zalomenie. Text v [zátvorkách] bude kurzívou.
    */
   overlayHeading: string;
-  height?: ('sm' | 'md' | 'lg' | 'xl') | null;
+  height?: ('sm' | 'md' | 'lg' | 'xl' | 'full') | null;
   overlayPosition?: ('center' | 'centerLeft' | 'topRight') | null;
   /**
    * Veľký © v pozadí (dekoratívny).
@@ -577,7 +575,6 @@ export interface ImageBannerBlock {
  * via the `definition` "MenuPreviewBlock".
  */
 export interface MenuPreviewBlock {
-  sectionLabel?: string | null;
   /**
    * Newline rozdelí riadky. Druhý riadok bude kurzívou v značkovej farbe.
    */
@@ -621,7 +618,6 @@ export interface MenuPreviewBlock {
  * via the `definition` "ChefsHighlightBlock".
  */
 export interface ChefsHighlightBlock {
-  sectionLabel?: string | null;
   /**
    * Použite © pre značkový accent.
    */
@@ -671,7 +667,6 @@ export interface ChefsHighlightBlock {
  * via the `definition` "RoomsGridBlock".
  */
 export interface RoomsGridBlock {
-  sectionLabel?: string | null;
   heading?: string | null;
   body?: string | null;
   /**
@@ -763,7 +758,6 @@ export interface Room {
  * via the `definition` "FamilyLunchCTABlock".
  */
 export interface FamilyLunchCTABlock {
-  sectionLabel?: string | null;
   heading: string;
   body?: string | null;
   courses?:
@@ -791,7 +785,6 @@ export interface FamilyLunchCTABlock {
  * via the `definition` "GalleryStripBlock".
  */
 export interface GalleryStripBlock {
-  sectionLabel?: string | null;
   variant?: ('collage' | 'scroll') | null;
   background?: ('default' | 'warm' | 'brown') | null;
   images: (number | Media)[];
@@ -805,7 +798,6 @@ export interface GalleryStripBlock {
  * via the `definition` "StepsBlock".
  */
 export interface StepsBlock {
-  sectionLabel?: string | null;
   heading?: string | null;
   steps?:
     | {
@@ -823,7 +815,6 @@ export interface StepsBlock {
  * via the `definition` "ChefsCourseMenuBlock".
  */
 export interface ChefsCourseMenuBlock {
-  sectionLabel?: string | null;
   image?: (number | null) | Media;
   courses?:
     | {
@@ -841,7 +832,6 @@ export interface ChefsCourseMenuBlock {
  * via the `definition` "ChefsRowBlock".
  */
 export interface ChefsRowBlock {
-  sectionLabel?: string | null;
   chefs?:
     | {
         photo: number | Media;
@@ -860,7 +850,6 @@ export interface ChefsRowBlock {
  * via the `definition` "StatsRowBlock".
  */
 export interface StatsRowBlock {
-  sectionLabel?: string | null;
   heading?: string | null;
   body?: string | null;
   stats?:
@@ -879,7 +868,6 @@ export interface StatsRowBlock {
  * via the `definition` "PricingCardsBlock".
  */
 export interface PricingCardsBlock {
-  sectionLabel?: string | null;
   note?: string | null;
   cards?:
     | {
@@ -897,7 +885,6 @@ export interface PricingCardsBlock {
  * via the `definition` "ContactCardsBlock".
  */
 export interface ContactCardsBlock {
-  sectionLabel?: string | null;
   cards?:
     | {
         kind?: ('address' | 'phone' | 'email' | 'custom') | null;
@@ -919,7 +906,6 @@ export interface ContactCardsBlock {
  * via the `definition` "MapSectionBlock".
  */
 export interface MapSectionBlock {
-  sectionLabel?: string | null;
   address?: string | null;
   embedSource?: ('settings' | 'custom') | null;
   customEmbed?: string | null;
@@ -943,7 +929,6 @@ export interface EnSectionBlock {
  * via the `definition` "FeaturedPostBlock".
  */
 export interface FeaturedPostBlock {
-  sectionLabel?: string | null;
   post: number | Post;
   id?: string | null;
   blockName?: string | null;
@@ -954,7 +939,6 @@ export interface FeaturedPostBlock {
  * via the `definition` "BlogGridBlock".
  */
 export interface BlogGridBlock {
-  sectionLabel?: string | null;
   source?: ('latest' | 'selected') | null;
   limit?: number | null;
   posts?: (number | Post)[] | null;
@@ -1421,7 +1405,6 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "IntroBlock_select".
  */
 export interface IntroBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   heading?: T;
   body?: T;
   image?: T;
@@ -1449,7 +1432,6 @@ export interface IntroBlockSelect<T extends boolean = true> {
  * via the `definition` "PillarsBlock_select".
  */
 export interface PillarsBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   background?: T;
   pillars?:
     | T
@@ -1497,7 +1479,6 @@ export interface ImageBannerBlockSelect<T extends boolean = true> {
  * via the `definition` "MenuPreviewBlock_select".
  */
 export interface MenuPreviewBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   heading?: T;
   categoriesLimit?: T;
   itemsPerCategory?: T;
@@ -1525,7 +1506,6 @@ export interface MenuPreviewBlockSelect<T extends boolean = true> {
  * via the `definition` "ChefsHighlightBlock_select".
  */
 export interface ChefsHighlightBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   logo?: T;
   heading?: T;
   quote?: T;
@@ -1562,7 +1542,6 @@ export interface ChefsHighlightBlockSelect<T extends boolean = true> {
  * via the `definition` "RoomsGridBlock_select".
  */
 export interface RoomsGridBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   heading?: T;
   body?: T;
   rooms?: T;
@@ -1589,7 +1568,6 @@ export interface RoomsGridBlockSelect<T extends boolean = true> {
  * via the `definition` "FamilyLunchCTABlock_select".
  */
 export interface FamilyLunchCTABlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   heading?: T;
   body?: T;
   courses?:
@@ -1610,7 +1588,6 @@ export interface FamilyLunchCTABlockSelect<T extends boolean = true> {
  * via the `definition` "GalleryStripBlock_select".
  */
 export interface GalleryStripBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   variant?: T;
   background?: T;
   images?: T;
@@ -1623,7 +1600,6 @@ export interface GalleryStripBlockSelect<T extends boolean = true> {
  * via the `definition` "StepsBlock_select".
  */
 export interface StepsBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   heading?: T;
   steps?:
     | T
@@ -1640,7 +1616,6 @@ export interface StepsBlockSelect<T extends boolean = true> {
  * via the `definition` "ChefsCourseMenuBlock_select".
  */
 export interface ChefsCourseMenuBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   image?: T;
   courses?:
     | T
@@ -1657,7 +1632,6 @@ export interface ChefsCourseMenuBlockSelect<T extends boolean = true> {
  * via the `definition` "ChefsRowBlock_select".
  */
 export interface ChefsRowBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   chefs?:
     | T
     | {
@@ -1675,7 +1649,6 @@ export interface ChefsRowBlockSelect<T extends boolean = true> {
  * via the `definition` "StatsRowBlock_select".
  */
 export interface StatsRowBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   heading?: T;
   body?: T;
   stats?:
@@ -1693,7 +1666,6 @@ export interface StatsRowBlockSelect<T extends boolean = true> {
  * via the `definition` "PricingCardsBlock_select".
  */
 export interface PricingCardsBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   note?: T;
   cards?:
     | T
@@ -1710,7 +1682,6 @@ export interface PricingCardsBlockSelect<T extends boolean = true> {
  * via the `definition` "ContactCardsBlock_select".
  */
 export interface ContactCardsBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   cards?:
     | T
     | {
@@ -1728,7 +1699,6 @@ export interface ContactCardsBlockSelect<T extends boolean = true> {
  * via the `definition` "MapSectionBlock_select".
  */
 export interface MapSectionBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   address?: T;
   embedSource?: T;
   customEmbed?: T;
@@ -1750,7 +1720,6 @@ export interface EnSectionBlockSelect<T extends boolean = true> {
  * via the `definition` "FeaturedPostBlock_select".
  */
 export interface FeaturedPostBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   post?: T;
   id?: T;
   blockName?: T;
@@ -1760,7 +1729,6 @@ export interface FeaturedPostBlockSelect<T extends boolean = true> {
  * via the `definition` "BlogGridBlock_select".
  */
 export interface BlogGridBlockSelect<T extends boolean = true> {
-  sectionLabel?: T;
   source?: T;
   limit?: T;
   posts?: T;

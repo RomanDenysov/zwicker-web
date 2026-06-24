@@ -2,12 +2,12 @@ import React from 'react'
 
 import type { MenuPreviewBlock as MenuPreviewBlockProps, Media as MediaType } from '@/payload-types'
 
+import { Container, contentWidth } from '@/components/Container'
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
 import { getDailyMenu } from '@/DailyMenu/getDailyMenu'
 
 export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
-  sectionLabel,
   heading,
   categoriesLimit,
   itemsPerCategory,
@@ -24,10 +24,9 @@ export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
 
   return (
     <section className="py-28 bg-background-warm">
-      <div className="container">
+      <Container>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-          <div className="max-w-[36rem]">
-            {sectionLabel && <div className="section-label">{sectionLabel}</div>}
+          <div className={contentWidth.intro}>
             {(headingLine1 || headingLine2) && (
               <h2 className="text-h2">
                 {headingLine1}
@@ -60,15 +59,20 @@ export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
                 key={photo.id}
                 className={i === 0 ? 'md:w-[840px] md:max-w-[60%]' : 'md:flex-1'}
               >
-                <Media
-                  resource={photo}
-                  imgClassName="w-full h-[320px] md:h-[420px] object-cover rounded"
-                />
+                <div className="relative h-[320px] md:h-[420px] w-full overflow-hidden rounded">
+                  <ParallaxMedia
+                    resource={photo}
+                    imgClassName="object-cover"
+                    speed={0.12}
+                    anchor="center"
+                    priority={false}
+                  />
+                </div>
               </div>
             ))}
           </div>
         )}
-      </div>
+      </Container>
     </section>
   )
 }

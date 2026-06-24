@@ -15,7 +15,6 @@ export async function HoursStrip() {
     <div className="bg-background-olive text-dark-foreground">
       <div className="container py-8 px-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
         <div className="text-label text-dark-strong">Otváracie hodiny</div>
-        <div className="hidden md:block flex-1 h-px bg-white/15" />
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-3">
           {hours.map((row, i) => (
             <div key={i} className="flex flex-col items-center text-center">
@@ -26,7 +25,6 @@ export async function HoursStrip() {
             </div>
           ))}
         </div>
-        <div className="hidden md:block flex-1 h-px bg-white/15" />
         {settings.phone && (
           <Link
             href={phoneHref!}

@@ -9,12 +9,6 @@ export const RoomsGrid: Block = {
   admin: { group: 'Ubytovanie' },
   fields: [
     {
-      name: 'sectionLabel',
-      type: 'text',
-      label: 'Štítok sekcie',
-      localized: true,
-    },
-    {
       name: 'heading',
       type: 'text',
       label: 'Nadpis',

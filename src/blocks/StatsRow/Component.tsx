@@ -3,14 +3,12 @@ import React from 'react'
 import type { StatsRowBlock as StatsRowBlockProps } from '@/payload-types'
 
 export const StatsRowBlock: React.FC<StatsRowBlockProps> = ({
-  sectionLabel,
   heading,
   body,
   stats,
 }) => (
   <section className="py-20">
     <div className="container max-w-4xl">
-      {sectionLabel && <div className="section-label">{sectionLabel}</div>}
       {heading && <h2 className="text-h2 mb-4">{heading}</h2>}
       {body && <p className="text-base text-foreground-muted leading-relaxed mb-10">{body}</p>}
       <div className="flex flex-wrap gap-10">

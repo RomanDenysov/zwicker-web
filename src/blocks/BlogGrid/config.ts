@@ -6,7 +6,6 @@ export const BlogGrid: Block = {
   labels: { singular: 'Mriežka príspevkov', plural: 'Mriežky príspevkov' },
   admin: { group: 'Blog' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     {
       name: 'source',
       type: 'select',

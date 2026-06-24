@@ -7,12 +7,6 @@ export const Pillars: Block = {
   admin: { group: 'Obsah' },
   fields: [
     {
-      name: 'sectionLabel',
-      type: 'text',
-      label: 'Štítok sekcie',
-      localized: true,
-    },
-    {
       name: 'background',
       type: 'select',
       label: 'Pozadie',

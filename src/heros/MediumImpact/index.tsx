@@ -15,7 +15,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richTex
   return (
     <section
       data-theme="dark"
-      className="relative h-[400px] -mt-16 flex items-center justify-center overflow-hidden text-white text-center"
+      className="relative h-[400px] -mt-[var(--header-height)] flex items-center justify-center overflow-hidden text-white text-center"
     >
       {media && typeof media === 'object' && (
         <ParallaxMedia

@@ -6,7 +6,6 @@ export const FeaturedPost: Block = {
   labels: { singular: 'Hlavný príspevok', plural: 'Hlavné príspevky' },
   admin: { group: 'Blog' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     {
       name: 'post',
       type: 'relationship',

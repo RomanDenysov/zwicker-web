@@ -29,7 +29,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <StructuredData data={buildSiteGraph(settings)} />
       </head>
-      <body>
+      <body
+        style={
+          {
+            '--header-height': 'calc(var(--spacing) * 16)',
+          } as React.CSSProperties
+        }
+      >
         <Providers>
           <AdminBar
             adminBarProps={{

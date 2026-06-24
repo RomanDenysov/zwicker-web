@@ -6,7 +6,6 @@ export const StatsRow: Block = {
   labels: { singular: 'Štatistiky (riadok)', plural: 'Štatistiky' },
   admin: { group: 'Obsah' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     { name: 'heading', type: 'text', label: 'Nadpis', localized: true },
     { name: 'body', type: 'textarea', label: 'Text', localized: true },
     {

@@ -6,7 +6,6 @@ export const ContactCards: Block = {
   labels: { singular: 'Kontaktné karty', plural: 'Kontaktné karty' },
   admin: { group: 'Kontakt' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     {
       name: 'cards',
       type: 'array',

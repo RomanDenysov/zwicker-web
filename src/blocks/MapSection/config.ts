@@ -6,7 +6,6 @@ export const MapSection: Block = {
   labels: { singular: 'Mapa', plural: 'Mapy' },
   admin: { group: 'Kontakt' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     { name: 'address', type: 'textarea', label: 'Adresa', localized: true },
     {
       name: 'embedSource',

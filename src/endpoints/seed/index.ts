@@ -239,7 +239,6 @@ export const seed = async ({
         // 2. Pillars — Reštaurácia / Penzión / Svadby
         {
           blockType: 'pillars',
-          sectionLabel: 'Čo nás robí iným©',
           background: 'dark',
           pillars: [
             {
@@ -271,7 +270,6 @@ export const seed = async ({
         // 3. Chef's Table
         {
           blockType: 'chefsHighlight',
-          sectionLabel: 'Degustačné večere',
           logo: '©HEF\'S TABLE',
           heading: 'Chef\'s Table',
           quote: 'Spomaľte. Každý chod je okamih, ktorý sa už nezopakuje.',
@@ -296,7 +294,6 @@ export const seed = async ({
         // 4. Gallery collage (warm)
         {
           blockType: 'galleryStrip',
-          sectionLabel: 'Galéria',
           variant: 'collage',
           background: 'warm',
           images: [media.chef1, media.chef2, media.plate, media.chef4, media.food],
@@ -304,7 +301,6 @@ export const seed = async ({
         // 5. Restaurant menu preview + photo pair
         {
           blockType: 'menuPreview',
-          sectionLabel: 'Reštaurácia',
           heading: 'Obed, ktorý chutí\nako večerný fine-dining.',
           categoriesLimit: 2,
           itemsPerCategory: 3,
@@ -333,7 +329,6 @@ export const seed = async ({
         // 7. Rooms
         {
           blockType: 'roomsGrid',
-          sectionLabel: 'Ubytovanie',
           heading: 'Penzión Zwi©ker',
           body:
             'Štyri komfortne zariadené izby dýchajú pocitom domova. Wellness so saunami, vírivkou a ochladzovacou kaďou.',
@@ -352,7 +347,6 @@ export const seed = async ({
         // 8. Gallery scroll (brown)
         {
           blockType: 'galleryStrip',
-          sectionLabel: 'Zo Zwickeru',
           variant: 'scroll',
           background: 'brown',
           scrollSpeed: 'normal',
@@ -391,7 +385,6 @@ export const seed = async ({
       layout: [
         {
           blockType: 'menuPreview',
-          sectionLabel: 'Aktuálne menu',
           heading: 'Výber\nz našej kuchyne',
           categoriesLimit: 4,
           itemsPerCategory: 10,
@@ -428,7 +421,6 @@ export const seed = async ({
       layout: [
         {
           blockType: 'chefsHighlight',
-          sectionLabel: 'Koncept',
           logo: 'CHEF\'S TABLE',
           heading: 'Ochutnávanie a znovuobjavovanie chutí',
           quote:
@@ -454,7 +446,6 @@ export const seed = async ({
         },
         {
           blockType: 'chefsCourseMenu',
-          sectionLabel: 'Chef\'s Choice',
           courses: [
             { title: 'Chlieb & maslo', description: 'Kromka pekáreň, sezónne bylinky' },
             { title: 'Marinovaná ryba', description: 'Nastudeno aj tepelne upravená' },
@@ -498,7 +489,6 @@ export const seed = async ({
       layout: [
         {
           blockType: 'familyLunchCTA',
-          sectionLabel: 'Tradícia',
           heading: 'Spoločný© rodinný obed',
           body:
             'Túto tradíciu poznáte už roky od nás z Zwickeru. Pripravíme Vám štyri chody, sami si naberáte a ochutnávate. Jedlo dostanete do stredu stola - každý si sám naberá, ochutnáva, zdieľa.',
@@ -571,7 +561,6 @@ export const seed = async ({
       layout: [
         {
           blockType: 'contactCards',
-          sectionLabel: 'Kontaktné informácie',
           cards: [
             {
               kind: 'address',
@@ -601,7 +590,6 @@ export const seed = async ({
         },
         {
           blockType: 'mapSection',
-          sectionLabel: 'Kde nás nájdete',
           address: 'Bardejovská 48/B\nPrešov - Ľubotice, 080 06',
           embedSource: 'settings',
         },
@@ -633,7 +621,6 @@ export const seed = async ({
       layout: [
         {
           blockType: 'roomsGrid',
-          sectionLabel: 'Izby',
           heading: 'Vyberte si vašu izbu',
           body:
             'Všetky izby sú klimatizované, s vlastným sociálnym zariadením a LCD TV. V cene ubytovania sú raňajky a la carte, bezplatné parkovanie a WIFI.',
@@ -641,7 +628,6 @@ export const seed = async ({
         },
         {
           blockType: 'pricingCards',
-          sectionLabel: 'Doplnky',
           cards: [
             { price: '10 €', label: 'Raňajky / osoba' },
             { price: 'Zdarma', label: 'Parkovanie & WIFI' },

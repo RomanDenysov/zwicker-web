@@ -9,12 +9,6 @@ export const ChefsHighlight: Block = {
   admin: { group: 'Reštaurácia' },
   fields: [
     {
-      name: 'sectionLabel',
-      type: 'text',
-      label: 'Štítok sekcie',
-      localized: true,
-    },
-    {
       name: 'logo',
       type: 'text',
       label: 'Logo text',

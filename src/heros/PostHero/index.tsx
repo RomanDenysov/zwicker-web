@@ -19,7 +19,7 @@ export const PostHero: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <section
       data-theme="dark"
-      className="relative h-[400px] -mt-16 flex items-end overflow-hidden text-white"
+      className="relative h-[400px] -mt-[var(--header-height)] flex items-end overflow-hidden text-white"
     >
       {heroImage && typeof heroImage === 'object' && (
         <ParallaxMedia

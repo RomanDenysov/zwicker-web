@@ -3,15 +3,21 @@ import React from 'react'
 import type { ImageBannerBlock as ImageBannerBlockProps } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
 import { cn } from '@/utilities/ui'
 
-const heights = { sm: 'h-[350px]', md: 'h-[500px]', lg: 'h-[700px]', xl: 'h-[900px]' }
+const heights = {
+  sm: 'h-[350px]',
+  md: 'h-[500px]',
+  lg: 'h-[700px]',
+  xl: 'h-[900px]',
+  full: 'h-[calc(100vh-var(--header-height))]',
+}
 
 // flex-col container: justify-* = vertical, items-* = horizontal
 const positions = {
   center: 'items-center justify-center text-center',
-  centerLeft: 'items-start justify-center text-left',
+  centerLeft: 'items-start justify-start text-left',
   topRight: 'items-end justify-start text-right',
 }
 
@@ -52,13 +58,19 @@ export const ImageBannerBlock: React.FC<ImageBannerBlockProps> = ({
       )}
     >
       {image && typeof image === 'object' && (
-        <Media fill resource={image} imgClassName="object-cover brightness-[0.55] saturate-[0.85]" />
+        <ParallaxMedia
+          resource={image}
+          imgClassName="object-cover brightness-[0.55] saturate-[0.85]"
+          speed={0.3}
+          anchor="center"
+          priority={false}
+        />
       )}
 
       {showCopyMark && (
         <span
           aria-hidden
-          className="pointer-events-none absolute -bottom-[8%] right-2 z-[1] select-none font-display font-normal leading-[0.8] text-dark-foreground-soft/90 text-[44vw] lg:text-[30rem]"
+          className="pointer-events-none absolute right-[6%] top-1/2 -translate-y-1/2 z-[1] select-none font-display font-normal leading-none text-dark-foreground-soft/90 text-[40vw] lg:text-[26rem]"
         >
           ©
         </span>

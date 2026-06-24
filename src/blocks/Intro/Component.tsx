@@ -3,13 +3,12 @@ import React from 'react'
 import type { IntroBlock as IntroBlockProps } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
 import { cn } from '@/utilities/ui'
 
 import { renderCopyMark } from '../shared/renderCopyMark'
 
 export const IntroBlock: React.FC<IntroBlockProps> = ({
-  sectionLabel,
   heading,
   body,
   image,
@@ -24,7 +23,6 @@ export const IntroBlock: React.FC<IntroBlockProps> = ({
       )}
     >
       <div>
-        {sectionLabel && <div className="section-label">{sectionLabel}</div>}
         <h2 className="text-h1 mb-6">{renderCopyMark(heading)}</h2>
         {body && <p className="text-base leading-relaxed text-foreground-muted max-w-md">{body}</p>}
         {links && links.length > 0 && (
@@ -38,10 +36,15 @@ export const IntroBlock: React.FC<IntroBlockProps> = ({
         )}
       </div>
       {image && typeof image === 'object' && (
-        <Media
-          resource={image}
-          imgClassName="w-full h-[550px] object-cover rounded saturate-[0.85]"
-        />
+        <div className="relative h-[550px] w-full overflow-hidden rounded">
+          <ParallaxMedia
+            resource={image}
+            imgClassName="object-cover saturate-[0.85]"
+            speed={0.12}
+            anchor="center"
+            priority={false}
+          />
+        </div>
       )}
     </div>
   </section>

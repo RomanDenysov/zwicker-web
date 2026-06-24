@@ -12,13 +12,21 @@ type Props = {
   resource: MediaType
   imgClassName?: string
   speed?: number
+  priority?: boolean
+  anchor?: 'top' | 'center'
 }
 
-export const ParallaxMedia: React.FC<Props> = ({ resource, imgClassName, speed }) => {
-  const ref = useParallax<HTMLDivElement>(speed)
+export const ParallaxMedia: React.FC<Props> = ({
+  resource,
+  imgClassName,
+  speed,
+  priority = true,
+  anchor = 'top',
+}) => {
+  const ref = useParallax<HTMLDivElement>(speed, anchor)
   return (
     <div ref={ref} className="parallax-wrap absolute inset-0">
-      <Media fill priority resource={resource} imgClassName={imgClassName} />
+      <Media fill priority={priority} resource={resource} imgClassName={imgClassName} />
     </div>
   )
 }

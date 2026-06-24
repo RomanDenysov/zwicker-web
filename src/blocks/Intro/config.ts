@@ -9,12 +9,6 @@ export const Intro: Block = {
   admin: { group: 'Obsah' },
   fields: [
     {
-      name: 'sectionLabel',
-      type: 'text',
-      label: 'Štítok sekcie',
-      localized: true,
-    },
-    {
       name: 'heading',
       type: 'text',
       label: 'Nadpis',

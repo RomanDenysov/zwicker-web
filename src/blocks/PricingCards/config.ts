@@ -6,7 +6,6 @@ export const PricingCards: Block = {
   labels: { singular: 'Cenové karty', plural: 'Cenové karty' },
   admin: { group: 'Ubytovanie' },
   fields: [
-    { name: 'sectionLabel', type: 'text', label: 'Štítok', localized: true },
     { name: 'note', type: 'text', label: 'Poznámka', localized: true },
     {
       name: 'cards',

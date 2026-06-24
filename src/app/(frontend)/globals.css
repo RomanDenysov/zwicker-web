@@ -49,40 +49,45 @@
 }
 
 @layer utilities {
+  /* Full-width, padded shell. `max-width: none` defeats Tailwind v4's built-in
+     `.container` utility, which otherwise re-caps width at each breakpoint.
+     Content spans the viewport and the side padding grows with the screen.
+     Long-form prose keeps its own line-length cap via `.prose`.
+     Mirrors `containerVariants` in src/components/Container. */
   .container {
     width: 100%;
+    max-width: none;
     margin-inline: auto;
     padding-inline: 1rem;
   }
 
   @variant sm {
     .container {
-      max-width: var(--breakpoint-sm);
+      padding-inline: 1.5rem;
     }
   }
 
   @variant md {
     .container {
-      max-width: var(--breakpoint-md);
       padding-inline: 2rem;
     }
   }
 
   @variant lg {
     .container {
-      max-width: var(--breakpoint-lg);
+      padding-inline: 3rem;
     }
   }
 
   @variant xl {
     .container {
-      max-width: var(--breakpoint-xl);
+      padding-inline: 4rem;
     }
   }
 
   @variant 2xl {
     .container {
-      max-width: var(--breakpoint-2xl);
+      padding-inline: 5rem;
     }
   }
 }
@@ -304,36 +309,9 @@
     color: var(--foreground-muted);
   }
 
-  /* Section label: "— O nás" pattern */
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--foreground-muted);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .section-label::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--foreground-subtle);
-  }
-  .section-label-dark {
-    color: rgba(255, 255, 255, 0.35);
-  }
-  .section-label-dark::before {
-    background: rgba(255, 255, 255, 0.15);
-  }
-  .section-label-center {
-    justify-content: center;
-  }
-
-  /* Brand copy-mark (© in terracotta) */
+  /* Brand copy-mark: © inherits the color of the text it sits in. */
   .copy-mark {
-    color: var(--primary);
+    color: inherit;
   }
 }
 

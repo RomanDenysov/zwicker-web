@@ -14,7 +14,7 @@ export const RoomHero: React.FC<{ room: Room }> = ({ room }) => {
   return (
     <section
       data-theme="dark"
-      className="relative h-[400px] -mt-16 flex items-center justify-center overflow-hidden text-white text-center"
+      className="relative h-[400px] -mt-[var(--header-height)] flex items-center justify-center overflow-hidden text-white text-center"
     >
       {room.heroImage && typeof room.heroImage === 'object' && (
         <ParallaxMedia

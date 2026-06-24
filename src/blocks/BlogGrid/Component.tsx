@@ -9,7 +9,6 @@ import { getPayload } from 'payload'
 import { formatDateTime } from '@/utilities/formatDateTime'
 
 export const BlogGridBlock: React.FC<BlogGridBlockProps> = async ({
-  sectionLabel,
   source,
   limit,
   posts,
@@ -34,7 +33,6 @@ export const BlogGridBlock: React.FC<BlogGridBlockProps> = async ({
   return (
     <section className="py-20">
       <div className="container">
-        {sectionLabel && <div className="section-label mb-10">{sectionLabel}</div>}
         <div className="grid gap-6 md:grid-cols-3">
           {items.map((post) => (
             <PostCard key={post.id} post={post} />

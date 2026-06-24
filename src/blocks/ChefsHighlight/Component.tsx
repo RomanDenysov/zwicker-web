@@ -2,13 +2,13 @@ import React from 'react'
 
 import type { ChefsHighlightBlock as ChefsHighlightBlockProps } from '@/payload-types'
 
+import { Container, contentWidth } from '@/components/Container'
 import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
+import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
 
 import { renderCopyMark } from '../shared/renderCopyMark'
 
 export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
-  sectionLabel,
   logo,
   heading,
   quote,
@@ -23,9 +23,12 @@ export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
   >
     {image && typeof image === 'object' && (
       <div className="absolute inset-0">
-        <Media
+        <ParallaxMedia
           resource={image}
-          imgClassName="absolute inset-0 w-full h-full object-cover saturate-[0.6] brightness-[0.55]"
+          imgClassName="object-cover saturate-[0.6] brightness-[0.55]"
+          speed={0.15}
+          anchor="center"
+          priority={false}
         />
         <div
           className="absolute inset-0"
@@ -36,11 +39,8 @@ export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
         />
       </div>
     )}
-    <div className="container relative">
-      {sectionLabel && (
-        <div className="section-label section-label-dark mb-8">{sectionLabel}</div>
-      )}
-      <div className="max-w-[40rem]">
+    <Container className="relative">
+      <div className={contentWidth.text}>
         <h2 className="text-display font-extralight tracking-[0.02em] uppercase leading-[0.95] text-foreground-sage">
           {logo ? renderCopyMark(logo) : heading}
         </h2>
@@ -76,6 +76,6 @@ export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
           </ul>
         )}
       </div>
-    </div>
+    </Container>
   </section>
 )

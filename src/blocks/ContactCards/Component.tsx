@@ -10,10 +10,9 @@ const defaultLabels: Record<string, string> = {
   custom: '',
 }
 
-export const ContactCardsBlock: React.FC<ContactCardsBlockProps> = ({ sectionLabel, cards }) => (
+export const ContactCardsBlock: React.FC<ContactCardsBlockProps> = ({ cards }) => (
   <section className="py-20">
     <div className="container">
-      {sectionLabel && <div className="section-label">{sectionLabel}</div>}
       <div className="grid gap-4 md:grid-cols-3 mt-8">
         {cards?.map((card, i) => {
           const key = card.id ?? i

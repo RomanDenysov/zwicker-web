@@ -6,7 +6,7 @@ import type { PillarsBlock as PillarsBlockProps } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
 
-export const PillarsBlock: React.FC<PillarsBlockProps> = ({ sectionLabel, background, pillars }) => {
+export const PillarsBlock: React.FC<PillarsBlockProps> = ({ background, pillars }) => {
   const isLight = background === 'light'
   return (
     <section
@@ -19,11 +19,6 @@ export const PillarsBlock: React.FC<PillarsBlockProps> = ({ sectionLabel, backgr
       )}
     >
       <div className="container">
-        {sectionLabel && (
-          <div className={cn('section-label mb-10', !isLight && 'section-label-dark')}>
-            {sectionLabel}
-          </div>
-        )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {pillars?.map((pillar, i) => {
             const cardInner = (

@@ -3,15 +3,11 @@ import React from 'react'
 import type { PricingCardsBlock as PricingCardsBlockProps } from '@/payload-types'
 
 export const PricingCardsBlock: React.FC<PricingCardsBlockProps> = ({
-  sectionLabel,
   note,
   cards,
 }) => (
   <section className="py-20">
     <div className="container text-center">
-      {sectionLabel && (
-        <div className="section-label section-label-center">{sectionLabel}</div>
-      )}
       {note && <p className="text-sm text-foreground-muted mt-4 mb-8">{note}</p>}
       <div className="flex justify-center gap-6 flex-wrap">
         {cards?.map((card, i) => (
