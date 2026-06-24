@@ -97,7 +97,7 @@ Only the things to verify/adjust — the structure already exists.
 
 **4.1 Header (NavBar)** — links order: Jedálny lístok, Chef's Table, Rodinný obed, Galéria, Ubytovanie, Kontakt, + sage "Rezervovať" button (`bg-sage-300 text-foreground`, `rounded`, `.text-nav`). **Logo — DONE:** `src/components/Logo/Logo.tsx` now takes `variant: 'wordmark' | 'mark'`; the circular ©-monogram (`public/zwicker-logo.svg`, inlined with `fill="currentColor"` so it adapts to the dark/light header) is rendered via `variant="mark"` in the navbar, and the footer keeps `variant="wordmark"` (ZW©KR). Edit nav link content in the **Header** global, not the component.
 
-**4.2 Hero** — `data-theme="dark"`, full-height, parallax dark image (`brightness-[0.55]`), `rgba(28,28,26,0.12)` overlay. Letters use `.brand-letter` (≈186px, tracking ≈126px). Already correct; just attach a hero `media` image.
+**4.2 Hero** — `data-theme="dark"`, full-height, parallax dark image (`brightness-[0.55]`) over a `bg-ink-900` backdrop, `rgba(28,28,26,0.12)` overlay; the photo fades in from black (a `bg-black` overlay whose `opacity` is transitioned 1→0 on mount via a `revealed` state) to mask the blur-placeholder flash. `.brand-letter` is sized with `clamp()` so the widest state (7-letter `ZWICKER`) fits the viewport at every width down to mobile — do not hardcode a px size. The `©` in `ZW©KR` is the brand monogram (`BrandMark`), not the font glyph. No scroll indicator. Just attach a hero `media` image.
 
 **4.3 HoursBar** — olive bar; label "OTVÁRACIE HODINY", three day-ranges, phone block right-aligned. Data is read from the `Settings` global — fill **Otváracie hodiny** and **Kontakt** there, don't hardcode.
 

@@ -10,6 +10,11 @@ import { Logo } from '@/components/Logo/Logo'
 import { cn } from '@/utilities/ui'
 import { HeaderNav } from './Nav'
 
+// Routes whose hero is a full-bleed dark image the sticky header overlays at the top.
+// Seeding transparency from the path lets the header render transparent on first paint
+// (SSR) instead of flashing its solid background before the hero's client effect resolves.
+const isDarkHeroRoute = (pathname: string) => pathname === '/'
+
 export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
@@ -27,7 +32,10 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const transparent = headerTheme === 'dark' && !scrolled
+  // `headerTheme` resolves from the hero's client effect (after paint); until then fall back
+  // to the route so dark-hero pages stay transparent from the first paint (no bg flash).
+  const isDark = headerTheme === 'dark' || (headerTheme == null && isDarkHeroRoute(pathname))
+  const transparent = isDark && !scrolled
 
   return (
     <header

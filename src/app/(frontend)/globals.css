@@ -343,15 +343,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%; /* never spill past the viewport, even mid-morph (ZWICKER state) */
   font-family: var(--font-display);
 }
 .brand-letter {
   display: inline-block;
   overflow: hidden;
   text-align: center;
-  font-size: clamp(4rem, 12vw, 11.625rem); /* ~186px on desktop */
+  /* Sized so the widest state (7-letter ZWICKER) fits the viewport at every width. */
+  font-size: clamp(1.75rem, 8.6vw, 10rem);
   inline-size: 1.1em;
-  margin-inline: clamp(0.5rem, 2vw, 2rem); /* tracking ~126px */
+  margin-inline: clamp(0.15rem, 1.25vw, 1.7rem);
   color: var(--dark-foreground-soft);
   transition:
     inline-size 1.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -371,9 +373,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.78em;
   opacity: 0;
   transition: opacity 0.75s ease-out 0.4s;
+}
+.brand-c-mark svg {
+  inline-size: 0.78em;
+  block-size: 0.78em;
 }
 .brand-morph[data-morphed='true'] .brand-collapse {
   inline-size: 0;

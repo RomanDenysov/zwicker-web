@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import type { Page } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
+import { BrandMark } from '@/components/Logo/BrandMark'
 import RichText from '@/components/RichText'
 import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
 import { useDarkTheme } from '@/heros/shared/useDarkTheme'
@@ -14,6 +15,7 @@ const LETTERS = ['Z', 'W', 'I', 'C', 'K', 'E', 'R'] as const
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   const [morphed, setMorphed] = useState(false)
+  const [revealed, setRevealed] = useState(false)
   useDarkTheme()
 
   useEffect(() => {
@@ -25,10 +27,16 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
     return () => clearTimeout(t)
   }, [])
 
+  // Fade the photo in from black on the next frame so the opacity transition runs.
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setRevealed(true))
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
   return (
     <section
       data-theme="dark"
-      className="relative h-screen -mt-16 flex items-center justify-center overflow-hidden text-dark-foreground-soft text-center"
+      className="relative h-screen -mt-16 flex items-center justify-center overflow-hidden bg-black text-dark-foreground-soft text-center"
     >
       {media && typeof media === 'object' && (
         <ParallaxMedia
@@ -40,6 +48,12 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
       <div
         className="absolute inset-0 bg-ink-900/12 pointer-events-none"
         style={{ backgroundColor: 'rgba(28,28,26,0.12)' }}
+      />
+      {/* Photo emerges from black on load (also hides the image blur-placeholder flash). */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1] bg-black pointer-events-none"
+        style={{ opacity: revealed ? 0 : 1, transition: 'opacity 1.2s ease-out' }}
       />
       <div className="relative z-10 px-4">
         <h1 className="mb-6">
@@ -55,7 +69,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
                 return (
                   <span key={i} className="brand-letter brand-c" aria-hidden="true">
                     <span className="brand-c-original">C</span>
-                    <span className="brand-c-mark copy-mark">©</span>
+                    <span className="brand-c-mark copy-mark">
+                      <BrandMark />
+                    </span>
                   </span>
                 )
               }
@@ -95,13 +111,6 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
             ))}
           </ul>
         )}
-      </div>
-      <div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-[0.6rem] uppercase tracking-[0.2em] text-white/35 animate-fade-up opacity-0"
-        style={{ animationDelay: '2.6s', animationFillMode: 'forwards' }}
-      >
-        Scroll
-        <span className="w-px h-10 bg-white/20 animate-pulse" />
       </div>
     </section>
   )
