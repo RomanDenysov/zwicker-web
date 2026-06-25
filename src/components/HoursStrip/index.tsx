@@ -13,9 +13,9 @@ export async function HoursStrip() {
 
   return (
     <div className="bg-background-olive text-dark-foreground">
-      <div className="container py-8 px-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
-        <div className="text-label text-dark-strong">Otváracie hodiny</div>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-3">
+      <div className="container py-6 sm:py-8 sm:px-12 px-6 flex flex-col sm:flex-row items-center justify-between gap-x-12 sm:gap-y-4 gap-y-6">
+        <div className="md:block hidden text-label text-dark-strong">Otváracie hodiny</div>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-12 gap-y-3">
           {hours.map((row, i) => (
             <div key={i} className="flex flex-col items-center text-center">
               <span className="text-[0.5625rem] tracking-[0.12em] uppercase text-dark-sub">

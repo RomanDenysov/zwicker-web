@@ -20,9 +20,11 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     setHeaderTheme(null)
+    setMobileOpen(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
@@ -33,26 +35,38 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Lock body scroll while the full-screen mobile menu is open.
+  useEffect(() => {
+    if (!mobileOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [mobileOpen])
+
   // `headerTheme` resolves from the hero's client effect (after paint); until then fall back
   // to the route so dark-hero pages stay transparent from the first paint (no bg flash).
   const isDark = headerTheme === 'dark' || (headerTheme == null && isDarkHeroRoute(pathname))
-  const transparent = isDark && !scrolled
+  const transparent = !mobileOpen && isDark && !scrolled
 
   return (
     <header
-      {...(transparent ? { 'data-theme': 'dark' } : {})}
+      {...(transparent || mobileOpen ? { 'data-theme': 'dark' } : {})}
       className={cn(
         'sticky top-0 z-50 h-[var(--header-height)] transition-[background,border,color] duration-300',
-        transparent
-          ? 'bg-transparent border-b border-transparent text-white'
-          : 'bg-background/90 backdrop-blur border-b border-border text-foreground',
+        mobileOpen
+          ? 'bg-dark border-b border-transparent text-white'
+          : transparent
+            ? 'bg-transparent border-b border-transparent text-white'
+            : 'bg-background/90 backdrop-blur border-b border-border text-foreground',
       )}
     >
       <Container className="h-full flex items-center justify-between">
         <Link href="/" aria-label="Zwicker - domov">
           <Logo variant="mark" />
         </Link>
-        <HeaderNav data={data} />
+        <HeaderNav data={data} mobileOpen={mobileOpen} onMobileOpenChange={setMobileOpen} />
       </Container>
     </header>
   )
