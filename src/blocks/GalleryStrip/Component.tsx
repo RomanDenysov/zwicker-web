@@ -45,7 +45,8 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
             <div key={img.id} className={cn('overflow-hidden rounded', collageSlots[i])}>
               <Media
                 resource={img}
-                imgClassName="w-full h-full object-cover saturate-[0.85] hover:saturate-100 hover:scale-[1.02] transition-[filter,transform] duration-500"
+                size="(max-width: 768px) 100vw, 50vw"
+                imgClassName="w-full h-full object-cover transform-gpu saturate-[0.85] hover:saturate-100 hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
               />
             </div>
           ))}
@@ -76,7 +77,8 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
           >
             <Media
               resource={img}
-              imgClassName="w-full h-full object-cover rounded saturate-[0.8] hover:saturate-100 transition-[filter]"
+              size="420px"
+              imgClassName="w-full h-full object-cover rounded saturate-[0.8] hover:saturate-100 transition-[filter] duration-500 ease-smooth"
             />
           </div>
         ))}

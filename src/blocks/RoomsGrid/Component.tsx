@@ -4,9 +4,10 @@ import React from 'react'
 import type { Room, RoomsGridBlock as RoomsGridBlockProps } from '@/payload-types'
 
 import { Container, contentWidth } from '@/components/Container'
-import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
+
+import { ArrowLink } from '../shared/ArrowLink'
 
 export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
   heading,
@@ -38,7 +39,7 @@ export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
         {links && links.length > 0 && (
           <div className="flex justify-center mt-12">
             {links.map((item, i) => (
-              <CMSLink key={item.id ?? i} {...item.link} />
+              <ArrowLink key={item.id ?? i} {...item.link} className="text-foreground-sage" />
             ))}
           </div>
         )}
@@ -51,12 +52,13 @@ function RoomCard({ room }: { room: Room }) {
   return (
     <Link
       href={`/izby/${room.slug}`}
-      className="group relative block overflow-hidden rounded h-[420px] cursor-pointer"
+      className="group relative block overflow-hidden rounded h-[420px] cursor-pointer transition-transform duration-300 ease-out-quint active:scale-[0.99]"
     >
       {room.heroImage && typeof room.heroImage === 'object' && (
         <Media
           resource={room.heroImage}
-          imgClassName="w-full h-full object-cover saturate-[0.8] group-hover:saturate-[0.95] group-hover:scale-[1.04] transition-[transform,filter] duration-700"
+          size="(max-width: 768px) 100vw, 50vw"
+          imgClassName="w-full h-full object-cover transform-gpu saturate-[0.8] group-hover:saturate-[0.95] group-hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
         />
       )}
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />

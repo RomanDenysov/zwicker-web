@@ -24,10 +24,11 @@ export const FeaturedPostBlock: React.FC<FeaturedPostBlockProps> = ({ post }) =>
             <div className="relative h-[380px] w-full overflow-hidden rounded">
               <ParallaxMedia
                 resource={heroImage}
-                imgClassName="object-cover saturate-[0.85] group-hover:saturate-100 transition-[filter]"
+                imgClassName="object-cover saturate-[0.85] group-hover:saturate-100 transition-[filter] duration-500 ease-smooth"
                 speed={0.1}
                 anchor="center"
                 priority={false}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           )}

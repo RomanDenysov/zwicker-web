@@ -217,6 +217,7 @@ export interface Page {
         | StatsRowBlock
         | PricingCardsBlock
         | ContactCardsBlock
+        | PrevioBookingBlock
         | MapSectionBlock
         | EnSectionBlock
         | FeaturedPostBlock
@@ -624,7 +625,6 @@ export interface ChefsHighlightBlock {
   logo?: string | null;
   heading: string;
   quote?: string | null;
-  body?: string | null;
   details?:
     | {
         value: string;
@@ -900,6 +900,26 @@ export interface ContactCardsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'contactCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PrevioBookingBlock".
+ */
+export interface PrevioBookingBlock {
+  heading?: string | null;
+  /**
+   * ID ubytovania v systéme Previo.
+   */
+  hotId: string;
+  language?: ('sk' | 'en') | null;
+  currency?: string | null;
+  /**
+   * Minimálna výška vloženého rezervačného formulára.
+   */
+  height?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'previoBooking';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1375,6 +1395,7 @@ export interface PagesSelect<T extends boolean = true> {
         statsRow?: T | StatsRowBlockSelect<T>;
         pricingCards?: T | PricingCardsBlockSelect<T>;
         contactCards?: T | ContactCardsBlockSelect<T>;
+        previoBooking?: T | PrevioBookingBlockSelect<T>;
         mapSection?: T | MapSectionBlockSelect<T>;
         enSection?: T | EnSectionBlockSelect<T>;
         featuredPost?: T | FeaturedPostBlockSelect<T>;
@@ -1509,7 +1530,6 @@ export interface ChefsHighlightBlockSelect<T extends boolean = true> {
   logo?: T;
   heading?: T;
   quote?: T;
-  body?: T;
   details?:
     | T
     | {
@@ -1691,6 +1711,19 @@ export interface ContactCardsBlockSelect<T extends boolean = true> {
         href?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PrevioBookingBlock_select".
+ */
+export interface PrevioBookingBlockSelect<T extends boolean = true> {
+  heading?: T;
+  hotId?: T;
+  language?: T;
+  currency?: T;
+  height?: T;
   id?: T;
   blockName?: T;
 }

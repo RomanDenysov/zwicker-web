@@ -3,16 +3,15 @@ import React from 'react'
 import type { ChefsHighlightBlock as ChefsHighlightBlockProps } from '@/payload-types'
 
 import { Container, contentWidth } from '@/components/Container'
-import { CMSLink } from '@/components/Link'
 import { ParallaxMedia } from '@/heros/shared/ParallaxMedia'
 
+import { ArrowLink } from '../shared/ArrowLink'
 import { renderCopyMark } from '../shared/renderCopyMark'
 
 export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
   logo,
   heading,
   quote,
-  body,
   details,
   image,
   links,
@@ -29,6 +28,7 @@ export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
           speed={0.15}
           anchor="center"
           priority={false}
+          sizes="100vw"
         />
         <div
           className="absolute inset-0"
@@ -44,14 +44,18 @@ export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
         <h2 className="text-display font-extralight tracking-[0.02em] uppercase leading-[0.95] text-foreground-sage">
           {logo ? renderCopyMark(logo) : heading}
         </h2>
-        {quote && (
-          <p className="mt-10 max-w-[28rem] text-[1.5rem] md:text-[2rem] leading-[1.25] uppercase tracking-[-0.01em] text-dark-foreground-soft">
-            {quote}
-          </p>
+        {links && links.length > 0 && (
+          <ul className="flex flex-wrap gap-6 mt-8">
+            {links.map((item, i) => (
+              <li key={item.id ?? i}>
+                <ArrowLink {...item.link} className="text-dark-foreground-soft" />
+              </li>
+            ))}
+          </ul>
         )}
-        {body && (
-          <p className="mt-6 max-w-[28rem] text-sm text-dark-muted leading-relaxed">
-            {body}
+        {quote && (
+          <p className="mt-12 max-w-[28rem] text-[1.5rem] md:text-[2rem] leading-[1.25] uppercase tracking-[-0.01em] text-dark-foreground-soft">
+            {quote}
           </p>
         )}
         {details && details.length > 0 && (
@@ -65,15 +69,6 @@ export const ChefsHighlightBlock: React.FC<ChefsHighlightBlockProps> = ({
               </div>
             ))}
           </div>
-        )}
-        {links && links.length > 0 && (
-          <ul className="flex gap-5 mt-10">
-            {links.map((item, i) => (
-              <li key={item.id ?? i}>
-                <CMSLink {...item.link} />
-              </li>
-            ))}
-          </ul>
         )}
       </div>
     </Container>

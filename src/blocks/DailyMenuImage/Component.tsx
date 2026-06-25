@@ -14,6 +14,7 @@ export const DailyMenuImageBlock: React.FC = async () => {
           <div className="max-w-xl mx-auto">
             <Media
               resource={menu.menuImage}
+              size="(max-width: 768px) 100vw, 576px"
               imgClassName="w-full h-auto rounded"
             />
           </div>

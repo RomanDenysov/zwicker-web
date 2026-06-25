@@ -13,6 +13,7 @@ export const ChefsRowBlock: React.FC<ChefsRowBlockProps> = ({ chefs }) => (
             {chef.photo && typeof chef.photo === 'object' && (
               <Media
                 resource={chef.photo}
+                size="280px"
                 imgClassName="w-[280px] h-[350px] object-cover rounded saturate-[0.85] mx-auto"
               />
             )}

@@ -273,8 +273,6 @@ export const seed = async ({
           logo: '©HEF\'S TABLE',
           heading: 'Chef\'s Table',
           quote: 'Spomaľte. Každý chod je okamih, ktorý sa už nezopakuje.',
-          body:
-            'Koncept degustačných večerí, pripravených našimi šéfkuchármi - Michalom „Majkym" Birošom a Lukášom „Jardo" Šepeľom. Rezervácia je potrebná vopred.',
           image: media.chefDark,
           details: [
             { value: '65 €', label: '5-chodové menu / osoba' },
@@ -425,8 +423,6 @@ export const seed = async ({
           heading: 'Ochutnávanie a znovuobjavovanie chutí',
           quote:
             'Je to koncept degustačných večerí, pripravených našimi šéfkuchármi - Michalom „Majkym" Birošom a Lukášom „Jardo" Šepeľom.',
-          body:
-            'Počas večere umožňujú ľuďom spoznať im často dobre známe suroviny v inom šate. Otvárame zdanlivo jednoduchým chodom - chlebík z pekárne Kromka, maslo a sezónna zelenina. Ďalej ochutnávate marinovanú rybu, mäsový chod, preddezert a dezert. Domáce sorbety, farebné vinaigrettes, rôzne omáčky a bylinky.',
           details: [
             { value: '5', label: 'chodov' },
             { value: '65 €', label: 'na osobu' },

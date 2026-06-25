@@ -49,11 +49,15 @@ function PostCard({ post }: { post: Post }) {
   const firstCategory =
     Array.isArray(categories) && typeof categories[0] === 'object' ? categories[0] : null
   return (
-    <Link href={`/posts/${slug}`} className="group bg-card rounded overflow-hidden flex flex-col">
+    <Link
+      href={`/posts/${slug}`}
+      className="group bg-card rounded overflow-hidden flex flex-col transition-transform duration-300 ease-out-quint active:scale-[0.99]"
+    >
       {heroImage && typeof heroImage === 'object' && (
         <Media
           resource={heroImage}
-          imgClassName="w-full h-[220px] object-cover saturate-[0.85] group-hover:saturate-100 transition-[filter]"
+          size="(max-width: 768px) 100vw, 33vw"
+          imgClassName="w-full h-[220px] object-cover transform-gpu saturate-[0.85] group-hover:saturate-100 group-hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
         />
       )}
       <div className="p-6 flex flex-col gap-3 grow">

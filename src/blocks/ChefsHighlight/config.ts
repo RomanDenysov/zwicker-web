@@ -29,12 +29,6 @@ export const ChefsHighlight: Block = {
       localized: true,
     },
     {
-      name: 'body',
-      type: 'textarea',
-      label: 'Text',
-      localized: true,
-    },
-    {
       name: 'details',
       type: 'array',
       label: 'Detaily',

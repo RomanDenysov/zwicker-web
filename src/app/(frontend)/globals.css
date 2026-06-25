@@ -46,6 +46,14 @@
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bagoss), 'Bagoss Condensed', ui-sans-serif, sans-serif;
+
+  /* Motion. Generates `ease-out-quint` / `ease-in-out-quint` / `ease-smooth`.
+     - quint: punchy, for quick UI feedback (button/card press).
+     - smooth (easeOutCubic): even, gentle settle for slow image zooms so they
+       don't pop. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quint: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-smooth: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 @layer utilities {

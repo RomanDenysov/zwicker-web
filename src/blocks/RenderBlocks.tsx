@@ -22,6 +22,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { MenuPreviewBlock } from '@/blocks/MenuPreview/Component'
 import { NewsletterBlock } from '@/blocks/Newsletter/Component'
 import { PillarsBlock } from '@/blocks/Pillars/Component'
+import { PrevioBookingBlock } from '@/blocks/PrevioBooking/Component'
 import { PricingCardsBlock } from '@/blocks/PricingCards/Component'
 import { RoomsGridBlock } from '@/blocks/RoomsGrid/Component'
 import { StatsRowBlock } from '@/blocks/StatsRow/Component'
@@ -48,6 +49,7 @@ const blockComponents = {
   menuPreview: MenuPreviewBlock,
   newsletter: NewsletterBlock,
   pillars: PillarsBlock,
+  previoBooking: PrevioBookingBlock,
   pricingCards: PricingCardsBlock,
   roomsGrid: RoomsGridBlock,
   statsRow: StatsRowBlock,

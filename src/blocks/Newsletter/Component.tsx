@@ -30,7 +30,7 @@ export const NewsletterBlock: React.FC<NewsletterBlockProps> = ({
         />
         <button
           type="submit"
-          className="px-8 py-4 bg-primary hover:bg-primary-light text-primary-foreground text-label rounded md:rounded-l-none transition-colors"
+          className="px-8 py-4 bg-primary hover:bg-primary-light text-primary-foreground text-label rounded md:rounded-l-none transition-[background-color,transform] duration-150 ease-out-quint active:scale-[0.98]"
         >
           {ctaLabel || 'Odoberať'}
         </button>

@@ -59,13 +59,14 @@ export const MenuPreviewBlock: React.FC<MenuPreviewBlockProps> = async ({
                 key={photo.id}
                 className={i === 0 ? 'md:w-[840px] md:max-w-[60%]' : 'md:flex-1'}
               >
-                <div className="relative h-[320px] md:h-[420px] w-full overflow-hidden rounded">
+                <div className="group relative h-[320px] md:h-[420px] w-full overflow-hidden rounded">
                   <ParallaxMedia
                     resource={photo}
-                    imgClassName="object-cover"
+                    imgClassName="object-cover transform-gpu saturate-[0.85] group-hover:saturate-100 group-hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
                     speed={0.12}
                     anchor="center"
                     priority={false}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
               </div>

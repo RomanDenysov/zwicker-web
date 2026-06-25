@@ -43,6 +43,8 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           resource={media}
           imgClassName="object-cover brightness-[0.55] saturate-[0.85]"
           speed={0.35}
+          priority
+          sizes="100vw"
         />
       )}
       <div

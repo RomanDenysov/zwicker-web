@@ -21,6 +21,8 @@ export const RoomHero: React.FC<{ room: Room }> = ({ room }) => {
           resource={room.heroImage}
           imgClassName="object-cover brightness-[0.4] saturate-[0.75]"
           speed={0.3}
+          priority
+          sizes="100vw"
         />
       )}
       <div className="relative z-10 container">

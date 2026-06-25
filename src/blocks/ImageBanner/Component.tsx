@@ -64,6 +64,7 @@ export const ImageBannerBlock: React.FC<ImageBannerBlockProps> = ({
           speed={0.3}
           anchor="center"
           priority={false}
+          sizes="100vw"
         />
       )}
 
@@ -92,11 +93,11 @@ export const ImageBannerBlock: React.FC<ImageBannerBlockProps> = ({
           <CMSLink
             {...link}
             appearance="inline"
-            className="group mt-4 inline-flex items-center gap-3 text-[0.6875rem] uppercase tracking-[0.14em] text-dark-foreground-soft transition-opacity hover:opacity-80"
+            className="group mt-4 inline-flex items-center gap-3 text-[0.6875rem] uppercase tracking-[0.14em] text-dark-foreground-soft transition-opacity duration-200 ease-out-quint hover:opacity-70"
           >
             <span
               aria-hidden
-              className="inline-block w-3.5 h-px bg-current relative transition-all group-hover:w-5 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-1.5 after:h-1.5 after:border-r after:border-t after:border-current after:rotate-45"
+              className="inline-block w-3.5 h-px bg-current relative transition-[width] duration-300 ease-smooth group-hover:w-5 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-1.5 after:h-1.5 after:border-r after:border-t after:border-current after:rotate-45"
             />
           </CMSLink>
         )}

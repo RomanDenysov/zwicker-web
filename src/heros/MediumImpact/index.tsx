@@ -22,6 +22,8 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richTex
           resource={media}
           imgClassName="object-cover brightness-[0.4] saturate-[0.75]"
           speed={0.3}
+          priority
+          sizes="100vw"
         />
       )}
       <div className="relative z-10 container">

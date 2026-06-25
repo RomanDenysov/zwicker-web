@@ -26,6 +26,8 @@ export const PostHero: React.FC<{ post: Post }> = ({ post }) => {
           resource={heroImage}
           imgClassName="object-cover brightness-[0.4] saturate-[0.75]"
           speed={0.3}
+          priority
+          sizes="100vw"
         />
       )}
       <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />

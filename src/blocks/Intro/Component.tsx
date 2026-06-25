@@ -43,6 +43,7 @@ export const IntroBlock: React.FC<IntroBlockProps> = ({
             speed={0.12}
             anchor="center"
             priority={false}
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       )}

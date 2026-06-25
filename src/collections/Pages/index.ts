@@ -22,6 +22,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { MenuPreview } from '../../blocks/MenuPreview/config'
 import { Newsletter } from '../../blocks/Newsletter/config'
 import { Pillars } from '../../blocks/Pillars/config'
+import { PrevioBooking } from '../../blocks/PrevioBooking/config'
 import { PricingCards } from '../../blocks/PricingCards/config'
 import { RoomsGrid } from '../../blocks/RoomsGrid/config'
 import { StatsRow } from '../../blocks/StatsRow/config'
@@ -106,6 +107,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 StatsRow,
                 PricingCards,
                 ContactCards,
+                PrevioBooking,
                 MapSection,
                 EnSection,
                 FeaturedPost,

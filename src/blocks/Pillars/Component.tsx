@@ -27,7 +27,8 @@ export const PillarsBlock: React.FC<PillarsBlockProps> = ({ background, pillars 
                   {pillar.image && typeof pillar.image === 'object' && (
                     <Media
                       resource={pillar.image}
-                      imgClassName="w-full h-full object-cover saturate-[0.85] group-hover:saturate-100 group-hover:scale-[1.03] transition-[transform,filter] duration-700"
+                      size="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      imgClassName="w-full h-full object-cover transform-gpu saturate-[0.85] group-hover:saturate-100 group-hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
                     />
                   )}
                 </div>
@@ -41,16 +42,20 @@ export const PillarsBlock: React.FC<PillarsBlockProps> = ({ background, pillars 
                   {pillar.body}
                 </p>
                 {pillar.ctaLabel && (
-                  <div className="mt-5 inline-flex items-center gap-3 text-[0.6875rem] tracking-[0.14em] uppercase text-dark-foreground-soft transition-opacity group-hover:opacity-80">
+                  <div className="mt-5 inline-flex items-center gap-3 text-[0.6875rem] tracking-[0.14em] uppercase text-dark-foreground-soft opacity-80 transition-opacity duration-200 ease-out-quint group-hover:opacity-100">
                     {pillar.ctaLabel}
-                    <span aria-hidden className="inline-block w-3.5 h-px bg-current relative after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-1.5 after:h-1.5 after:border-r after:border-t after:border-current after:rotate-45" />
+                    <span aria-hidden className="inline-block w-3.5 h-px bg-current relative transition-[width] duration-300 ease-smooth group-hover:w-5 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-1.5 after:h-1.5 after:border-r after:border-t after:border-current after:rotate-45" />
                   </div>
                 )}
               </>
             )
             const cardCls = 'group flex flex-col p-8 rounded bg-transparent'
             return pillar.ctaHref ? (
-              <Link key={pillar.id || i} href={pillar.ctaHref} className={cardCls}>
+              <Link
+                key={pillar.id || i}
+                href={pillar.ctaHref}
+                className={cn(cardCls, 'transition-transform duration-300 ease-out-quint active:scale-[0.99]')}
+              >
                 {cardInner}
               </Link>
             ) : (
