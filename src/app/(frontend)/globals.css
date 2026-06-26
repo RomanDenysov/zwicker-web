@@ -408,8 +408,11 @@
 }
 
 .parallax-wrap {
+  /* translate3d already GPU-promotes for smooth parallax. `will-change` is
+     toggled on by useParallax only while the wrapper is in view — a permanent
+     `will-change: transform` pins a stuck compositor layer that breaks image
+     lazy-loading and repaints for off-screen wrappers. */
   transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.12);
-  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
