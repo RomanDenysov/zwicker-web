@@ -56,6 +56,8 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
+    decoding,
+    quality = 80,
   } = props
 
   let width: number | undefined
@@ -77,6 +79,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
+  // `decoding="sync"` paints the image crisp and all-at-once (NextFaster feel),
+  // so skip the blur placeholder that would otherwise compete with it.
+  const useBlur = decoding !== 'sync'
+
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = sizeFromProps
     ? sizeFromProps
@@ -91,10 +97,11 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
-        placeholder="blur"
-        blurDataURL={placeholderBlur}
+        placeholder={useBlur ? 'blur' : 'empty'}
+        blurDataURL={useBlur ? placeholderBlur : undefined}
         priority={priority}
-        quality={80}
+        quality={quality}
+        decoding={decoding}
         loading={loading}
         sizes={sizes}
         src={src}

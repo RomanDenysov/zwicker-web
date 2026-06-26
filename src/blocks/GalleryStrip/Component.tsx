@@ -46,6 +46,9 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
               <Media
                 resource={img}
                 size="(max-width: 768px) 100vw, 50vw"
+                // Top row (first 2 slots) loads eagerly; sync decode for a crisp, all-at-once paint.
+                loading={i < 2 ? 'eager' : 'lazy'}
+                decoding="sync"
                 imgClassName="w-full h-full object-cover transform-gpu saturate-[0.85] hover:saturate-100 hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
               />
             </div>
@@ -78,6 +81,9 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
             <Media
               resource={img}
               size="420px"
+              // First few tiles are visible before the marquee scrolls; load them eagerly.
+              loading={i < 3 ? 'eager' : 'lazy'}
+              decoding="sync"
               imgClassName="w-full h-full object-cover rounded saturate-[0.8] hover:saturate-100 transition-[filter] duration-500 ease-smooth"
             />
           </div>

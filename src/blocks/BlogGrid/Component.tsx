@@ -34,8 +34,9 @@ export const BlogGridBlock: React.FC<BlogGridBlockProps> = async ({
     <section className="py-20">
       <div className="container">
         <div className="grid gap-6 md:grid-cols-3">
-          {items.map((post) => (
-            <PostCard key={post.id} post={post} />
+          {items.map((post, i) => (
+            // First row (3 cards) loads eagerly; the rest stay lazy.
+            <PostCard key={post.id} post={post} eager={i < 3} />
           ))}
         </div>
       </div>
@@ -43,7 +44,7 @@ export const BlogGridBlock: React.FC<BlogGridBlockProps> = async ({
   )
 }
 
-function PostCard({ post }: { post: Post }) {
+function PostCard({ post, eager }: { post: Post; eager?: boolean }) {
   const { title, slug, heroImage, meta, categories, publishedAt } = post
   const description = meta?.description
   const firstCategory =
@@ -57,6 +58,8 @@ function PostCard({ post }: { post: Post }) {
         <Media
           resource={heroImage}
           size="(max-width: 768px) 100vw, 33vw"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="sync"
           imgClassName="w-full h-[220px] object-cover transform-gpu saturate-[0.85] group-hover:saturate-100 group-hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
         />
       )}

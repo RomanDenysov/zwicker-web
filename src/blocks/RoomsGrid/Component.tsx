@@ -32,8 +32,9 @@ export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
           )}
         </div>
         <div className="grid gap-8 md:grid-cols-2">
-          {populated.map((room) => (
-            <RoomCard key={room.id} room={room} />
+          {populated.map((room, i) => (
+            // First row (2 cards) loads eagerly; the rest stay lazy.
+            <RoomCard key={room.id} room={room} eager={i < 2} />
           ))}
         </div>
         {links && links.length > 0 && (
@@ -48,7 +49,7 @@ export const RoomsGridBlock: React.FC<RoomsGridBlockProps> = ({
   )
 }
 
-function RoomCard({ room }: { room: Room }) {
+function RoomCard({ room, eager }: { room: Room; eager?: boolean }) {
   return (
     <Link
       href={`/izby/${room.slug}`}
@@ -58,6 +59,8 @@ function RoomCard({ room }: { room: Room }) {
         <Media
           resource={room.heroImage}
           size="(max-width: 768px) 100vw, 50vw"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="sync"
           imgClassName="w-full h-full object-cover transform-gpu saturate-[0.8] group-hover:saturate-[0.95] group-hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
         />
       )}
