@@ -23,7 +23,20 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    meta: {
+      titleSuffix: '- Zwicker',
+      icons: [
+        { rel: 'icon', type: 'image/svg+xml', url: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', url: '/favicon.ico' },
+        { rel: 'apple-touch-icon', url: '/apple-touch-icon.png' },
+      ],
+    },
     components: {
+      graphics: {
+        // Login-screen logo and sidebar nav icon (Zwicker brand mark).
+        Logo: '@/components/AdminLogo/Logo#Logo',
+        Icon: '@/components/AdminLogo/Icon#Icon',
+      },
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],

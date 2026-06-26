@@ -25,8 +25,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className={fontVariables} lang="sk" suppressHydrationWarning>
       <head>
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <StructuredData data={buildSiteGraph(settings)} />
       </head>
       <body
@@ -67,10 +65,12 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     icons: {
       icon: [
-        { url: '/favicon.ico', sizes: '32x32' },
+        { url: '/favicon.ico', sizes: 'any' },
         { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       ],
-      apple: '/favicon.svg',
+      apple: '/apple-touch-icon.png',
     },
     openGraph: mergeOpenGraph({ description }),
     twitter: {
