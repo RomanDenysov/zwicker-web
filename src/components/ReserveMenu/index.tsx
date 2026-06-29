@@ -74,7 +74,10 @@ export const ReserveMenu: React.FC = () => {
         aria-expanded={open}
         aria-controls="reserve-menu"
         onClick={() => setOpen((v) => !v)}
-        className={buttonVariants({ size: 'sm' })}
+        className={cn(
+          buttonVariants({ size: 'sm' }),
+          'bg-sage-300 text-dark hover:bg-sage-300/85',
+        )}
       >
         Rezervovať
         <ChevronDown className={cn('transition-transform duration-300', open && 'rotate-180')} />
