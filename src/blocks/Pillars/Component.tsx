@@ -8,30 +8,6 @@ import { cn } from '@/utilities/ui'
 
 export const PillarsBlock: React.FC<PillarsBlockProps> = ({ background, pillars }) => {
   const isLight = background === 'light'
-  const items = pillars || []
-  if (!items.length) return null
-
-  // Number + title + body + CTA — shared by the mobile stack and desktop grid.
-  const meta = (pillar: NonNullable<PillarsBlockProps['pillars']>[number], i: number) => (
-    <>
-      <div className="mt-6 text-[0.625rem] tracking-[0.2em] text-sage-200">
-        {String(i + 1).padStart(2, '0')}
-      </div>
-      <h3 className="mt-3 text-[1.125rem] font-medium tracking-[0.02em] uppercase text-dark-foreground">
-        {pillar.title}
-      </h3>
-      <p className="mt-3 text-[0.8125rem] uppercase leading-[1.4] text-dark-muted">
-        {pillar.body}
-      </p>
-      {pillar.ctaLabel && (
-        <div className="mt-5 inline-flex items-center gap-3 text-[0.6875rem] tracking-[0.14em] uppercase text-dark-foreground-soft opacity-80 transition-opacity duration-200 ease-out-quint group-hover:opacity-100">
-          {pillar.ctaLabel}
-          <span aria-hidden className="inline-block w-3.5 h-px bg-current relative transition-[width] duration-300 ease-smooth group-hover:w-5 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-1.5 after:h-1.5 after:border-r after:border-t after:border-current after:rotate-45" />
-        </div>
-      )}
-    </>
-  )
-
   return (
     <section
       {...(isLight ? {} : { 'data-theme': 'dark' })}
@@ -43,43 +19,8 @@ export const PillarsBlock: React.FC<PillarsBlockProps> = ({ background, pillars 
       )}
     >
       <div className="container">
-        {/* Mobile: cards stack and overlap each other as you scroll. */}
-        <div className="md:hidden">
-          {items.map((pillar, i) => {
-            const card = (
-              <div className="group overflow-hidden rounded bg-background-olive shadow-[0_-14px_36px_-10px_rgba(0,0,0,0.5)]">
-                <div className="aspect-[4/5] w-full overflow-hidden bg-background-subtle">
-                  {pillar.image && typeof pillar.image === 'object' && (
-                    <Media
-                      resource={pillar.image}
-                      size="100vw"
-                      loading={i < 1 ? 'eager' : 'lazy'}
-                      imgClassName="w-full h-full object-cover saturate-[0.85]"
-                    />
-                  )}
-                </div>
-                <div className="px-7 pb-9">{meta(pillar, i)}</div>
-              </div>
-            )
-            return (
-              <div
-                key={pillar.id || i}
-                className="sticky"
-                style={{ top: `calc(var(--header-height) + ${i * 0.75}rem)` }}
-              >
-                {pillar.ctaHref ? (
-                  <Link href={pillar.ctaHref}>{card}</Link>
-                ) : (
-                  card
-                )}
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Desktop: editorial grid. */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {items.map((pillar, i) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {pillars?.map((pillar, i) => {
             const cardInner = (
               <>
                 <div className="aspect-[4/5] w-full overflow-hidden rounded bg-background-subtle">
@@ -91,7 +32,21 @@ export const PillarsBlock: React.FC<PillarsBlockProps> = ({ background, pillars 
                     />
                   )}
                 </div>
-                {meta(pillar, i)}
+                <div className="mt-6 text-[0.625rem] tracking-[0.2em] text-sage-200">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 className="mt-3 text-[1.125rem] font-medium tracking-[0.02em] uppercase text-dark-foreground">
+                  {pillar.title}
+                </h3>
+                <p className="mt-3 text-[0.8125rem] uppercase leading-[1.4] text-dark-muted">
+                  {pillar.body}
+                </p>
+                {pillar.ctaLabel && (
+                  <div className="mt-5 inline-flex items-center gap-3 text-[0.6875rem] tracking-[0.14em] uppercase text-dark-foreground-soft opacity-80 transition-opacity duration-200 ease-out-quint group-hover:opacity-100">
+                    {pillar.ctaLabel}
+                    <span aria-hidden className="inline-block w-3.5 h-px bg-current relative transition-[width] duration-300 ease-smooth group-hover:w-5 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-1.5 after:h-1.5 after:border-r after:border-t after:border-current after:rotate-45" />
+                  </div>
+                )}
               </>
             )
             const cardCls = 'group flex flex-col p-8 rounded bg-transparent'
