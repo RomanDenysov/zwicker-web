@@ -13,15 +13,22 @@ const backgrounds: Record<string, string> = {
   brown: 'bg-background-brown',
 }
 
-// Fixed slots for the loose collage (first 5 images map into these).
-// Each pairs a column-span with an aspect ratio for a staggered, editorial feel.
-const collageSlots = [
-  'col-span-7 aspect-[4/3]',
-  'col-span-5 aspect-[3/4]',
-  'col-span-5 aspect-square',
-  'col-span-7 aspect-[16/10]',
-  'col-span-12 aspect-[21/9]',
+// Loose editorial collage (first 5 images map into these slots).
+// Desktop places each image into a 12x12 grid with deliberate gaps and
+// staggered rows so the photos "float" with whitespace around them.
+const collageSlots: React.CSSProperties[] = [
+  { gridColumn: '1 / span 4', gridRow: '2 / span 6' }, // left, portrait
+  { gridColumn: '5 / span 4', gridRow: '1 / span 6' }, // center, sits highest
+  { gridColumn: '9 / span 4', gridRow: '2 / span 5' }, // right
+  { gridColumn: '2 / span 5', gridRow: '8 / span 5' }, // lower left, portrait
+  { gridColumn: '7 / span 5', gridRow: '7 / span 5' }, // lower right, wide
 ]
+
+// Mobile fallback: simple 2-col editorial grid; the 5th image spans full width.
+const mobileSlots = ['aspect-[3/4]', 'aspect-[3/4]', 'aspect-square', 'aspect-square', 'col-span-2 aspect-[16/10]']
+
+const collageImgClassName =
+  'object-cover transform-gpu saturate-[0.85] hover:saturate-100 hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth'
 
 export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
   images,
@@ -38,21 +45,47 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
   if (variant === 'collage') {
     const slotted = items.slice(0, collageSlots.length)
     return (
-      <section className={cn('py-28', bg)} {...(isBrown ? { 'data-theme': 'dark' } : {})}>
-        {/* Edge-to-edge collage: only the gap-sized gutter at the viewport edges. */}
-        <div className="grid grid-cols-12 gap-3 md:gap-4 px-3 md:px-4">
-          {slotted.map((img, i) => (
-            <div key={img.id} className={cn('overflow-hidden rounded', collageSlots[i])}>
-              <Media
-                resource={img}
-                size="(max-width: 768px) 100vw, 50vw"
-                // Top row (first 2 slots) loads eagerly; sync decode for a crisp, all-at-once paint.
-                loading={i < 2 ? 'eager' : 'lazy'}
-                decoding="sync"
-                imgClassName="w-full h-full object-cover transform-gpu saturate-[0.85] hover:saturate-100 hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth"
-              />
-            </div>
-          ))}
+      <section className={cn('py-20 md:py-28', bg)} {...(isBrown ? { 'data-theme': 'dark' } : {})}>
+        <div className="container">
+          {/* Mobile: simple 2-col editorial grid. */}
+          <div className="grid grid-cols-2 gap-3 md:hidden">
+            {slotted.map((img, i) => (
+              <div key={img.id} className={cn('relative overflow-hidden rounded', mobileSlots[i])}>
+                <Media
+                  resource={img}
+                  fill
+                  size="(max-width: 768px) 50vw, 25vw"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  decoding="sync"
+                  imgClassName={collageImgClassName}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: loose scattered collage with whitespace. */}
+          <div
+            className="hidden md:grid gap-y-8 gap-x-10 lg:gap-x-16"
+            style={{
+              gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+              gridTemplateRows: 'repeat(12, minmax(0, 1fr))',
+              aspectRatio: '1006 / 700',
+            }}
+          >
+            {slotted.map((img, i) => (
+              <div key={img.id} className="relative overflow-hidden rounded" style={collageSlots[i]}>
+                <Media
+                  resource={img}
+                  fill
+                  size="33vw"
+                  // Top-row slots load eagerly; sync decode for a crisp, all-at-once paint.
+                  loading={i < 3 ? 'eager' : 'lazy'}
+                  decoding="sync"
+                  imgClassName={collageImgClassName}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     )
@@ -65,7 +98,7 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
 
   return (
     <section
-      className={cn('py-28 overflow-hidden', bg)}
+      className={cn('pt-28 pb-44 overflow-hidden', bg)}
       {...(isBrown ? { 'data-theme': 'dark' } : {})}
     >
       <div
@@ -76,15 +109,16 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
           <div
             key={`${img.id}-${i}`}
             aria-hidden={i >= originalLen ? 'true' : undefined}
-            className="shrink-0 w-[420px] h-[300px]"
+            className="relative shrink-0 w-[420px] h-[300px] overflow-hidden rounded"
           >
             <Media
               resource={img}
+              fill
               size="420px"
               // First few tiles are visible before the marquee scrolls; load them eagerly.
               loading={i < 3 ? 'eager' : 'lazy'}
               decoding="sync"
-              imgClassName="w-full h-full object-cover rounded saturate-[0.8] hover:saturate-100 transition-[filter] duration-500 ease-smooth"
+              imgClassName="object-cover saturate-[0.8] hover:saturate-100 transition-[filter] duration-500 ease-smooth"
             />
           </div>
         ))}
