@@ -8,6 +8,12 @@ import type { Header as HeaderType } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { MobileMenu } from '@/components/MobileMenu'
 import { ReserveMenu } from '@/components/ReserveMenu'
+import { cn } from '@/utilities/ui'
+
+// Both icons stay mounted, stacked in the same grid cell; the open state crossfades
+// between them (blur + scale pop) instead of a hard swap. See Transitions.dev icon-swap.
+const iconSwapBase =
+  'col-start-1 row-start-1 size-6 transition-all duration-[250ms] ease-in-out motion-reduce:transition-none'
 
 type Props = {
   data: HeaderType
@@ -44,7 +50,20 @@ export const HeaderNav: React.FC<Props> = ({ data, mobileOpen, onMobileOpenChang
         aria-controls="mobile-menu"
         onClick={() => onMobileOpenChange(!mobileOpen)}
       >
-        {mobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+        <span className="grid place-items-center" aria-hidden="true">
+          <Menu
+            className={cn(
+              iconSwapBase,
+              mobileOpen ? 'scale-[0.25] opacity-0 blur-[2px]' : 'scale-100 opacity-100 blur-none',
+            )}
+          />
+          <X
+            className={cn(
+              iconSwapBase,
+              mobileOpen ? 'scale-100 opacity-100 blur-none' : 'scale-[0.25] opacity-0 blur-[2px]',
+            )}
+          />
+        </span>
       </button>
 
       <MobileMenu open={mobileOpen} navItems={navItems} onClose={() => onMobileOpenChange(false)} />
