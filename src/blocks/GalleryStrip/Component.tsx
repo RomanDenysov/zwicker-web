@@ -24,9 +24,6 @@ const collageSlots: React.CSSProperties[] = [
   { gridColumn: '7 / span 5', gridRow: '7 / span 5' }, // lower right, wide
 ]
 
-// Mobile fallback: simple 2-col editorial grid; the 5th image spans full width.
-const mobileSlots = ['aspect-[3/4]', 'aspect-[3/4]', 'aspect-square', 'aspect-square', 'col-span-2 aspect-[16/10]']
-
 const collageImgClassName =
   'object-cover transform-gpu saturate-[0.85] hover:saturate-100 hover:scale-[1.03] transition-[transform,scale,filter] duration-500 ease-smooth'
 
@@ -47,18 +44,24 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
     return (
       <section className={cn('py-20 md:py-28', bg)} {...(isBrown ? { 'data-theme': 'dark' } : {})}>
         <div className="container">
-          {/* Mobile: simple 2-col editorial grid. */}
-          <div className="grid grid-cols-2 gap-3 md:hidden">
+          {/* Mobile: cards stack and overlap each other as you scroll. */}
+          <div className="md:hidden">
             {slotted.map((img, i) => (
-              <div key={img.id} className={cn('relative overflow-hidden rounded', mobileSlots[i])}>
-                <Media
-                  resource={img}
-                  fill
-                  size="(max-width: 768px) 50vw, 25vw"
-                  loading={i < 2 ? 'eager' : 'lazy'}
-                  decoding="sync"
-                  imgClassName={collageImgClassName}
-                />
+              <div
+                key={img.id}
+                className="sticky"
+                style={{ top: `calc(var(--header-height) + ${i * 0.625}rem)` }}
+              >
+                <div className="relative aspect-[4/5] overflow-hidden rounded shadow-[0_-12px_32px_-10px_rgba(20,16,10,0.35)]">
+                  <Media
+                    resource={img}
+                    fill
+                    size="100vw"
+                    loading={i < 2 ? 'eager' : 'lazy'}
+                    decoding="sync"
+                    imgClassName="object-cover saturate-[0.85]"
+                  />
+                </div>
               </div>
             ))}
           </div>
