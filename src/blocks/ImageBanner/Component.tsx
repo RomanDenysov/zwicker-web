@@ -71,7 +71,7 @@ export const ImageBannerBlock: React.FC<ImageBannerBlockProps> = ({
       {showCopyMark && (
         <span
           aria-hidden
-          className="pointer-events-none absolute right-[6%] top-[57%] -translate-y-1/2 scale-x-90 z-[1] select-none font-sans font-extralight leading-none text-dark-foreground-soft/90 text-[48vw] lg:text-[32rem]"
+          className="pointer-events-none absolute right-[2%] -bottom-[5%] z-[1] select-none font-sans font-normal leading-none text-dark-foreground-soft/90 text-[48vw] lg:text-[34rem]"
         >
           ©
         </span>
