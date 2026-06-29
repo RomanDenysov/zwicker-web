@@ -24,7 +24,10 @@ export async function Footer() {
       <Container className="py-20">
         <div className="grid gap-14 md:grid-cols-[1.2fr_1fr_1fr] pb-14 border-b border-dark-border">
           <div>
-            <Logo size="lg" className="block mb-5" />
+            <Logo
+              size="lg"
+              className="block mb-6 text-foreground-sage text-6xl sm:text-7xl lg:text-8xl tracking-normal"
+            />
             {settings.siteDescription && (
               <p className="text-sm leading-relaxed text-dark-muted max-w-[300px]">
                 {settings.siteDescription}

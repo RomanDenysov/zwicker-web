@@ -33,7 +33,7 @@ export const Logo = ({ size = 'md', variant = 'wordmark', className }: Props) =>
   return (
     <span
       aria-label="Zwicker"
-      className={cn('font-display font-medium leading-none select-none', sizeClass[size], className)}
+      className={cn('font-display font-regular leading-none select-none', sizeClass[size], className)}
     >
       ZW<span className="copy-mark">©</span>KR
     </span>
