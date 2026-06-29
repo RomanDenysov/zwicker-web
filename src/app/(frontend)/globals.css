@@ -336,10 +336,13 @@
   display: inline-block;
   overflow: hidden;
   text-align: center;
-  /* Sized so the widest state (7-letter ZWICKER) fits the viewport at every width. */
-  font-size: clamp(1.75rem, 8.6vw, 10rem);
-  inline-size: 1.1em;
-  margin-inline: clamp(0.15rem, 1.25vw, 1.7rem);
+  /* Figma sizes the final ZW©KR wordmark at ~186px. The box is tightened
+     (0.92em ≥ widest glyph W = 0.90em advance) and inter-letter margins are
+     reduced so the widest morph state (7-letter ZWICKER) still fits the
+     viewport down to mobile. */
+  font-size: clamp(2.25rem, 13vw, 11.625rem); /* ~186px desktop cap */
+  inline-size: 0.92em;
+  margin-inline: clamp(0.1rem, 0.5vw, 0.6rem);
   color: var(--dark-foreground-soft);
   transition:
     inline-size 1.4s cubic-bezier(0.22, 1, 0.36, 1),
