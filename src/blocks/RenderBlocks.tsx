@@ -27,6 +27,7 @@ import { PricingCardsBlock } from '@/blocks/PricingCards/Component'
 import { RoomsGridBlock } from '@/blocks/RoomsGrid/Component'
 import { StatsRowBlock } from '@/blocks/StatsRow/Component'
 import { StepsBlock } from '@/blocks/Steps/Component'
+import { Reveal } from '@/components/Reveal'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -60,6 +61,11 @@ const blockComponents = {
 // Zwicker blocks handle their own section padding.
 const legacyBlocks = new Set(['archive', 'content', 'cta', 'mediaBlock'])
 
+// Blocks excluded from the section-level scroll reveal: `pillars` staggers its
+// own children, and `galleryStrip` carries its own marquee + sticky-stacking
+// motion that a `translate` wrapper would fight.
+const noAutoReveal = new Set(['pillars', 'steps', 'statsRow', 'galleryStrip'])
+
 type Block = NonNullable<Page['layout']>[number]
 
 export const RenderBlocks: React.FC<{
@@ -76,12 +82,19 @@ export const RenderBlocks: React.FC<{
         if (blockType && blockType in blockComponents) {
           const Block = blockComponents[blockType as keyof typeof blockComponents]
           if (!Block) return null
-          const isLegacy = legacyBlocks.has(blockType)
-          return (
-            <div key={index} className={isLegacy ? 'my-16' : ''}>
-              {/* @ts-expect-error block type unions not narrowable by string key here */}
-              <Block {...block} disableInnerContainer />
+          const wrapperClass = legacyBlocks.has(blockType) ? 'my-16' : ''
+          const content = (
+            // @ts-expect-error block type unions not narrowable by string key here
+            <Block {...block} disableInnerContainer />
+          )
+          return noAutoReveal.has(blockType) ? (
+            <div key={index} className={wrapperClass}>
+              {content}
             </div>
+          ) : (
+            <Reveal key={index} className={wrapperClass}>
+              {content}
+            </Reveal>
           )
         }
         return null

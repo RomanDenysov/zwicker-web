@@ -2,13 +2,17 @@ import React from 'react'
 
 import type { StepsBlock as StepsBlockProps } from '@/payload-types'
 
+import { Reveal } from '@/components/Reveal'
+
 export const StepsBlock: React.FC<StepsBlockProps> = ({ heading, steps }) => (
   <section className="py-28">
     <div className="container">
-      <div className="text-center mb-14">
-        {heading && <h2 className="text-h1 mt-4">{heading}</h2>}
-      </div>
-      <div className="grid gap-10 md:grid-cols-3">
+      {heading && (
+        <Reveal className="text-center mb-14">
+          <h2 className="text-h1 mt-4">{heading}</h2>
+        </Reveal>
+      )}
+      <Reveal stagger className="grid gap-10 md:grid-cols-3">
         {steps?.map((step, i) => (
           <div key={step.id || i}>
             <div className="text-[2.5rem] font-extralight text-primary leading-none mb-4">
@@ -18,7 +22,7 @@ export const StepsBlock: React.FC<StepsBlockProps> = ({ heading, steps }) => (
             <p className="text-sm text-foreground-muted leading-relaxed">{step.body}</p>
           </div>
         ))}
-      </div>
+      </Reveal>
     </div>
   </section>
 )

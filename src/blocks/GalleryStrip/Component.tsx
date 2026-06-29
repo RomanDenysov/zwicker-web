@@ -3,6 +3,7 @@ import React from 'react'
 import type { GalleryStripBlock as GalleryStripBlockProps, Media as MediaType } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { Reveal } from '@/components/Reveal'
 import { cn } from '@/utilities/ui'
 
 const speeds = { slow: '60s', normal: '35s', fast: '20s' }
@@ -66,8 +67,10 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
             ))}
           </div>
 
-          {/* Desktop: loose scattered collage with whitespace. */}
-          <div
+          {/* Desktop: loose scattered collage with whitespace. Each photo floats
+              in on its own as the collage scrolls into view. */}
+          <Reveal
+            stagger
             className="hidden md:grid gap-y-8 gap-x-10 lg:gap-x-16"
             style={{
               gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
@@ -88,7 +91,7 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
                 />
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
     )

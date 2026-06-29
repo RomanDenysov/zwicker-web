@@ -406,8 +406,41 @@
 }
 
 @keyframes gallerySlide {
+  /* The track duplicates its items, so a full loop is -50% of the track. The
+     extra `- 0.375rem` is half of the `gap-3` (0.75rem) between tiles: without
+     it the loop lands half a gap short and visibly hitches at the seam. */
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(calc(-50% - 0.375rem)); }
+}
+
+/* Scroll reveal (see src/components/Reveal). `item` lifts the wrapper as one
+   unit; `group` staggers its direct children. Uses the independent `translate`
+   property so it composes with Tailwind transforms instead of clobbering them.
+   The hidden state only exists when motion is allowed, so reduced-motion users
+   get fully-visible content with no JS dependency. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal='item'],
+  [data-reveal='group'] > * {
+    opacity: 0;
+    translate: 0 20px;
+    transition:
+      opacity 0.7s var(--ease-out-quint),
+      translate 0.7s var(--ease-out-quint);
+  }
+
+  [data-reveal='item'][data-revealed='true'],
+  [data-reveal='group'][data-revealed='true'] > * {
+    opacity: 1;
+    translate: none;
+  }
+
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(2) { transition-delay: 60ms; }
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(3) { transition-delay: 120ms; }
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(4) { transition-delay: 180ms; }
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(5) { transition-delay: 240ms; }
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(6) { transition-delay: 300ms; }
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(7) { transition-delay: 360ms; }
+  [data-reveal='group'][data-revealed='true'] > *:nth-child(8) { transition-delay: 420ms; }
 }
 
 .parallax-wrap {
