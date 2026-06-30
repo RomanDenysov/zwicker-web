@@ -2261,9 +2261,16 @@ export interface Setting {
   defaultOgImage?: (number | null) | Media;
   siteDescription?: string | null;
   /**
-   * Odkaz na stránku s menu (schema.org hasMenu - pomáha vo vyhľadávaní). Napr. /menu alebo plná URL.
+   * Voliteľné. Interný odkaz na stránku s menu alebo vlastná URL - použije sa pre schema.org hasMenu (pomáha vo vyhľadávaní).
    */
-  menuUrl?: string | null;
+  menuLink?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    url?: string | null;
+  };
   /**
    * Zobrazuje sa vo vyhľadávaní (schema.org priceRange)
    */
@@ -2381,7 +2388,13 @@ export interface SettingsSelect<T extends boolean = true> {
   facebook?: T;
   defaultOgImage?: T;
   siteDescription?: T;
-  menuUrl?: T;
+  menuLink?:
+    | T
+    | {
+        type?: T;
+        reference?: T;
+        url?: T;
+      };
   priceRange?: T;
   servesCuisine?: T;
   updatedAt?: T;

@@ -159,6 +159,41 @@ export const Settings: GlobalConfig = {
               localized: true,
             },
             {
+              name: 'menuLink',
+              type: 'group',
+              label: 'Odkaz na jedálny lístok',
+              admin: {
+                hideGutter: true,
+                description:
+                  'Voliteľné. Interný odkaz na stránku s menu alebo vlastná URL - použije sa pre schema.org hasMenu (pomáha vo vyhľadávaní).',
+              },
+              fields: [
+                {
+                  name: 'type',
+                  type: 'radio',
+                  defaultValue: 'reference',
+                  admin: { layout: 'horizontal' },
+                  options: [
+                    { label: 'Interný odkaz', value: 'reference' },
+                    { label: 'Vlastná URL', value: 'custom' },
+                  ],
+                },
+                {
+                  name: 'reference',
+                  type: 'relationship',
+                  relationTo: ['pages'],
+                  label: 'Stránka',
+                  admin: { condition: (_, siblingData) => siblingData?.type === 'reference' },
+                },
+                {
+                  name: 'url',
+                  type: 'text',
+                  label: 'Vlastná URL',
+                  admin: { condition: (_, siblingData) => siblingData?.type === 'custom' },
+                },
+              ],
+            },
+            {
               type: 'row',
               fields: [
                 {

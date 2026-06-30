@@ -5,6 +5,30 @@ import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from './siteMeta'
 
 type JsonLd = Record<string, unknown>
 
+// Raster brand asset for schema.org `logo` (Google prefers PNG/JPG over SVG here).
+const BRAND_LOGO = '/android-chrome-512x512.png'
+// Hotel reservation flow. Mirrors `/rezervacia` in src/components/ReserveMenu/items.ts.
+const RESERVATION_PATH = '/rezervacia'
+
+const absoluteUrl = (base: string, value?: string | null): string | undefined => {
+  if (!value) return undefined
+  if (/^https?:\/\//.test(value)) return value
+  return `${base}${value.startsWith('/') ? '' : '/'}${value}`
+}
+
+/** Resolve a Settings link group (internal page reference or custom URL) to an absolute URL.
+ *  Mirrors the href logic in src/components/Link (CMSLink). Needs depth >= 1 to populate refs. */
+const resolveLinkHref = (base: string, link?: Setting['menuLink']): string | undefined => {
+  if (!link) return undefined
+  if (link.type === 'custom') return absoluteUrl(base, link.url)
+  const value = link.reference?.value
+  if (typeof value === 'object' && value?.slug) {
+    const prefix = link.reference?.relationTo !== 'pages' ? `/${link.reference?.relationTo}` : ''
+    return `${base}${prefix}/${value.slug}`
+  }
+  return undefined
+}
+
 const WEEK_ORDER = [
   'Monday',
   'Tuesday',
@@ -127,6 +151,7 @@ const sameAs = (settings: Setting) =>
 
 /** Shared NAP fields reused by Restaurant + LodgingBusiness nodes. */
 const napCore = (settings: Setting): JsonLd => {
+  const url = getServerSideURL()
   const address = buildAddress(settings)
   const geo = buildGeo(settings)
   const social = sameAs(settings)
@@ -134,6 +159,7 @@ const napCore = (settings: Setting): JsonLd => {
   const openingHours = buildOpeningHours(settings)
 
   return {
+    logo: `${url}${BRAND_LOGO}`,
     ...(image ? { image } : {}),
     ...(settings.phone ? { telephone: settings.phone } : {}),
     ...(settings.email ? { email: settings.email } : {}),
@@ -151,6 +177,8 @@ export const buildSiteGraph = (settings: Setting): JsonLd => {
   const description = settings.siteDescription || SITE_DESCRIPTION
   const core = napCore(settings)
 
+  const menuUrl = resolveLinkHref(url, settings.menuLink)
+
   const restaurant: JsonLd = {
     '@type': 'Restaurant',
     '@id': `${url}/#restaurant`,
@@ -158,6 +186,8 @@ export const buildSiteGraph = (settings: Setting): JsonLd => {
     description,
     url,
     ...core,
+    acceptsReservations: true,
+    ...(menuUrl ? { hasMenu: menuUrl } : {}),
     ...(settings.priceRange ? { priceRange: settings.priceRange } : {}),
     ...(settings.servesCuisine ? { servesCuisine: settings.servesCuisine } : {}),
   }
@@ -170,6 +200,22 @@ export const buildSiteGraph = (settings: Setting): JsonLd => {
     url,
     ...core,
     ...(settings.priceRange ? { priceRange: settings.priceRange } : {}),
+    potentialAction: {
+      '@type': 'ReserveAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${url}${RESERVATION_PATH}`,
+        inLanguage: 'sk-SK',
+        actionPlatform: [
+          'http://schema.org/DesktopWebPlatform',
+          'http://schema.org/MobileWebPlatform',
+        ],
+      },
+      result: {
+        '@type': 'LodgingReservation',
+        name: `Rezervácia ubytovania - Penzión ${SITE_NAME}`,
+      },
+    },
   }
 
   const website: JsonLd = {
@@ -250,4 +296,31 @@ export const buildPostGraph = (post: Post): JsonLd => {
     mainEntityOfPage: `${url}/posts/${post.slug}`,
     publisher: { '@type': 'Organization', name: SITE_NAME, '@id': `${url}/#restaurant` },
   }
+}
+
+const buildBreadcrumb = (crumbs: { name: string; url?: string }[]): JsonLd => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((crumb, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: crumb.name,
+    ...(crumb.url ? { item: crumb.url } : {}),
+  })),
+})
+
+/** Domov > Aktuality > {post}. Last crumb has no URL (it's the current page). */
+export const buildPostBreadcrumb = (post: Post): JsonLd => {
+  const url = getServerSideURL()
+  return buildBreadcrumb([
+    { name: 'Domov', url: `${url}/` },
+    { name: 'Aktuality', url: `${url}/posts` },
+    { name: post.meta?.title || post.title },
+  ])
+}
+
+/** Domov > {room}. No /izby index route exists, so the listing level is omitted. */
+export const buildRoomBreadcrumb = (room: Room): JsonLd => {
+  const url = getServerSideURL()
+  return buildBreadcrumb([{ name: 'Domov', url: `${url}/` }, { name: room.title }])
 }

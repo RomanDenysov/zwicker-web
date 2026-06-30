@@ -11,7 +11,7 @@ import RichText from '@/components/RichText'
 import { RoomHero } from '@/heros/RoomHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import { StructuredData } from '@/components/StructuredData'
-import { buildRoomGraph } from '@/utilities/structuredData'
+import { buildRoomGraph, buildRoomBreadcrumb } from '@/utilities/structuredData'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -39,7 +39,7 @@ export default async function RoomPage({ params: paramsPromise }: Args) {
 
   return (
     <article className="pb-24">
-      <StructuredData data={buildRoomGraph(room)} />
+      <StructuredData data={[buildRoomGraph(room), buildRoomBreadcrumb(room)]} />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
 

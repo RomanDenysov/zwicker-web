@@ -14,7 +14,7 @@ import { PostHero } from '@/heros/PostHero'
 import { HoursStrip } from '@/components/HoursStrip'
 import { generateMeta } from '@/utilities/generateMeta'
 import { StructuredData } from '@/components/StructuredData'
-import { buildPostGraph } from '@/utilities/structuredData'
+import { buildPostGraph, buildPostBreadcrumb } from '@/utilities/structuredData'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -57,7 +57,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   return (
     <article className="pb-16">
       <PageClient />
-      <StructuredData data={buildPostGraph(post)} />
+      <StructuredData data={[buildPostGraph(post), buildPostBreadcrumb(post)]} />
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />

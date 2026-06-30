@@ -45,7 +45,7 @@ export const generateMeta = async (args: {
       title,
       description,
       url: serverUrl + pathname,
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: title }] : undefined,
     }),
   }
 }
