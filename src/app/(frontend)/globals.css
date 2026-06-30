@@ -413,6 +413,75 @@
   animation: fade-up 0.8s ease both;
 }
 
+/* Page transition (see src/app/(frontend)/template.tsx). The template re-mounts
+   per navigation, replaying this entrance. Uses the independent `translate`
+   property and no fill-mode so it composes with descendant transforms and
+   leaves no lingering transform (which would reparent fixed/sticky children).
+   Gated on motion preference, mirroring the Reveal convention. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-transition {
+    animation: page-enter 0.45s var(--ease-out-quint);
+  }
+}
+
+/* Brand loader (see src/app/(frontend)/loading.tsx). The ©-monogram's three
+   subpaths draw in sequence (stroke dash), the fill fades in, then the mark
+   breathes as an indeterminate indicator. `pathLength="1"` on the path lets the
+   dash math use normalized 0-1 lengths. Reduced-motion users land on the static
+   filled mark: the global reduce rule zeroes durations, so `logo-draw both`
+   snaps to its filled end state and the breathe holds still. */
+/* Base = static filled mark, so reduced-motion users (and the no-JS path) get a
+   clean logo with no flicker. `pathLength="1"` normalizes the dash math to 0-1
+   and `stroke-dasharray: 1` makes one dash span the whole outline. */
+.logo-loader__path {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+}
+
+/* Motion: the three subpaths (outer ring, inner ring, the C) trace themselves
+   with fill off, the fill paints in, holds, then fades out and redraws - so the
+   *drawing* is the recurring effect, not a one-off. The fade-out hides the loop
+   reset, so the dashoffset/opacity jump back to the start is never visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .logo-loader__path {
+    animation: logo-draw 4.8s var(--ease-in-out-quint) infinite;
+  }
+}
+
+@keyframes logo-draw {
+  0% {
+    stroke-dashoffset: 1;
+    fill-opacity: 0;
+    opacity: 1;
+  }
+  42% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0;
+  }
+  58% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+  84% {
+    fill-opacity: 1;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+    opacity: 0;
+  }
+}
+
 /* Scroll reveal (see src/components/Reveal). `item` lifts the wrapper as one
    unit; `group` staggers its direct children. Uses the independent `translate`
    property so it composes with Tailwind transforms instead of clobbering them.
