@@ -52,17 +52,32 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
 
   return (
     <header
-      {...(transparent || mobileOpen ? { 'data-theme': 'dark' } : {})}
-      className={cn(
-        'sticky top-0 z-50 h-[var(--header-height)] transition-[background,border,color] duration-300',
-        mobileOpen
-          ? 'bg-dark border-b border-transparent text-white'
-          : transparent
-            ? 'bg-transparent border-b border-transparent text-white'
-            : 'bg-background/90 backdrop-blur border-b border-border text-foreground',
-      )}
+      data-theme="dark"
+      className="sticky top-0 z-50 h-(--header-height) text-white"
     >
-      <Container className="h-full flex items-center justify-between">
+      {/* Background. Mobile menu is a flat panel; otherwise a factory.ai-style progressive
+          blur: frosted+tinted at the top edge, fading to clear past the bar. Fades in on
+          scroll (opacity) so the hero top stays fully transparent. */}
+      {mobileOpen ? (
+        <div aria-hidden className="absolute inset-0 bg-dark" />
+      ) : (
+        <div
+          aria-hidden
+          className={cn(
+            'pointer-events-none absolute inset-x-0 top-0 h-[160%] transition-opacity duration-300',
+            transparent ? 'opacity-0' : 'opacity-100',
+          )}
+        >
+          <div className="absolute inset-0 backdrop-blur-[12px] [mask-image:linear-gradient(to_bottom,black_0%,black_18%,transparent_40%)]" />
+          <div className="absolute inset-0 backdrop-blur-[8px] [mask-image:linear-gradient(to_bottom,transparent_10%,black_30%,black_42%,transparent_62%)]" />
+          <div className="absolute inset-0 backdrop-blur-[4px] [mask-image:linear-gradient(to_bottom,transparent_34%,black_54%,black_64%,transparent_84%)]" />
+          <div className="absolute inset-0 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,transparent_56%,black_74%,transparent_100%)]" />
+          {/* Dark tint overlay for legibility, fading out with the blur. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark/85 via-dark/40 to-transparent" />
+        </div>
+      )}
+
+      <Container className="relative h-full flex items-center justify-between">
         <Link href="/" aria-label="Zwicker - domov">
           <Logo variant="mark" />
         </Link>

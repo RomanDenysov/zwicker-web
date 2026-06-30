@@ -240,6 +240,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
+    --header-height: calc(var(--spacing) * 16);
+  }
+
+  /* Testing: taller header on desktop only */
+  @media (width >= 48rem) {
+    body {
+      --header-height: 80px;
+    }
   }
 
   /* Grain overlay - signature Zwicker texture */

@@ -27,13 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <StructuredData data={buildSiteGraph(settings)} />
       </head>
-      <body
-        style={
-          {
-            '--header-height': 'calc(var(--spacing) * 16)',
-          } as React.CSSProperties
-        }
-      >
+      <body>
         <Providers>
           <AdminBar
             adminBarProps={{
