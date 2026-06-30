@@ -2261,6 +2261,10 @@ export interface Setting {
   defaultOgImage?: (number | null) | Media;
   siteDescription?: string | null;
   /**
+   * Odkaz na stránku s menu (schema.org hasMenu - pomáha vo vyhľadávaní). Napr. /menu alebo plná URL.
+   */
+  menuUrl?: string | null;
+  /**
    * Zobrazuje sa vo vyhľadávaní (schema.org priceRange)
    */
   priceRange?: string | null;
@@ -2288,6 +2292,14 @@ export interface DailyMenu {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Zobrazí na webe tlačidlo „Stiahnuť jedálny lístok (PDF)“. PDF sa generuje z kategórií a položiek nižšie.
+   */
+  enableGuestDownload?: boolean | null;
+  /**
+   * Automaticky nastavené tlačidlom „Generovať PDF“.
+   */
+  menuPdf?: (number | null) | Media;
   menuImage?: (number | null) | Media;
   allergenNote?: string | null;
   updatedAt?: string | null;
@@ -2369,6 +2381,7 @@ export interface SettingsSelect<T extends boolean = true> {
   facebook?: T;
   defaultOgImage?: T;
   siteDescription?: T;
+  menuUrl?: T;
   priceRange?: T;
   servesCuisine?: T;
   updatedAt?: T;
@@ -2394,6 +2407,8 @@ export interface DailyMenuSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  enableGuestDownload?: T;
+  menuPdf?: T;
   menuImage?: T;
   allergenNote?: T;
   updatedAt?: T;

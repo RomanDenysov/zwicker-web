@@ -1,11 +1,12 @@
 import React from 'react'
 
 import { Media } from '@/components/Media'
+import { MenuDownloadButton } from '@/DailyMenu/MenuDownloadButton'
 import { getDailyMenu } from '@/DailyMenu/getDailyMenu'
 
 export const DailyMenuImageBlock: React.FC = async () => {
   const menu = await getDailyMenu()
-  if (!menu.menuImage && !menu.allergenNote) return null
+  if (!menu.menuImage && !menu.allergenNote && !menu.enableGuestDownload) return null
 
   return (
     <section className="py-20">
@@ -23,6 +24,11 @@ export const DailyMenuImageBlock: React.FC = async () => {
           <p className="text-center text-sm italic text-foreground-muted mt-10 max-w-3xl mx-auto">
             {menu.allergenNote}
           </p>
+        )}
+        {menu.enableGuestDownload && (
+          <div className="mt-10 flex justify-center">
+            <MenuDownloadButton />
+          </div>
         )}
       </div>
     </section>

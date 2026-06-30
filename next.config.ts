@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
   sassOptions: {
     loadPaths: ['./node_modules/@payloadcms/ui/dist/scss/'],
   },
+  // Keep @react-pdf/renderer out of the bundle (large, uses dynamic requires).
+  serverExternalPackages: ['@react-pdf/renderer'],
+  // Ship the menu PDF fonts into the serverless functions that render the PDF.
+  outputFileTracingIncludes: {
+    '/menu/pdf': ['./src/DailyMenu/pdf/fonts/**'],
+    '/api/[...slug]': ['./src/DailyMenu/pdf/fonts/**'],
+  },
   images: {
     localPatterns: [
       {

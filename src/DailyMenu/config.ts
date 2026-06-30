@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { generateMenuPdf } from './endpoints/generatePdf'
 import { revalidateDailyMenu } from './hooks/revalidateDailyMenu'
 
 export const DailyMenu: GlobalConfig = {
@@ -8,6 +9,7 @@ export const DailyMenu: GlobalConfig = {
   access: {
     read: () => true,
   },
+  endpoints: [generateMenuPdf],
   hooks: {
     afterChange: [revalidateDailyMenu],
   },
@@ -64,10 +66,39 @@ export const DailyMenu: GlobalConfig = {
           label: 'PDF / Obrázok menu',
           fields: [
             {
+              name: 'enableGuestDownload',
+              type: 'checkbox',
+              label: 'Povoliť stiahnutie PDF pre návštevníkov',
+              defaultValue: false,
+              admin: {
+                description:
+                  'Zobrazí na webe tlačidlo „Stiahnuť jedálny lístok (PDF)“. PDF sa generuje z kategórií a položiek nižšie.',
+              },
+            },
+            {
+              name: 'generatePdf',
+              type: 'ui',
+              admin: {
+                components: {
+                  Field: '@/DailyMenu/admin/GenerateMenuPdfButton#GenerateMenuPdfButton',
+                },
+              },
+            },
+            {
+              name: 'menuPdf',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Vygenerované PDF menu',
+              admin: {
+                readOnly: true,
+                description: 'Automaticky nastavené tlačidlom „Generovať PDF“.',
+              },
+            },
+            {
               name: 'menuImage',
               type: 'upload',
               relationTo: 'media',
-              label: 'Obrázok menu (PDF export)',
+              label: 'Obrázok menu (ručne nahraný)',
             },
             {
               name: 'allergenNote',
