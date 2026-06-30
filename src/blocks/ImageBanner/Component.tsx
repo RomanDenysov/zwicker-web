@@ -71,7 +71,7 @@ export const ImageBannerBlock: React.FC<ImageBannerBlockProps> = ({
       {showCopyMark && (
         <span
           aria-hidden
-          className="pointer-events-none absolute right-[2%] -bottom-[5%] z-[1] select-none font-sans font-normal leading-none text-dark-foreground-soft/90 text-[48vw] lg:text-[34rem]"
+          className="pointer-events-none absolute right-[2%] bottom-[5%] z-[1] select-none font-sans font-normal leading-none text-dark-foreground-soft/90 text-[58vw] lg:-bottom-[5%] lg:text-[34rem]"
         >
           ©
         </span>
@@ -86,7 +86,7 @@ export const ImageBannerBlock: React.FC<ImageBannerBlockProps> = ({
         {overlayLabel && (
           <p className="text-label text-dark-foreground/55">{overlayLabel}</p>
         )}
-        <h2 className="font-display font-normal uppercase leading-[1.15] tracking-[-0.01em] text-[clamp(1.75rem,3vw,2.5rem)] max-w-[20ch]">
+        <h2 className="font-display font-normal uppercase leading-[1.15] tracking-[-0.01em] text-[clamp(2rem,3vw,2.5rem)] max-w-[20ch]">
           {renderHeading(overlayHeading)}
         </h2>
         {link && (

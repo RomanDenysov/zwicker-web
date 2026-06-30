@@ -243,10 +243,10 @@
     --header-height: calc(var(--spacing) * 16);
   }
 
-  /* Testing: taller header on desktop only */
+  /* Taller header on desktop only */
   @media (width >= 48rem) {
     body {
-      --header-height: 80px;
+      --header-height: 72px;
     }
   }
 
@@ -283,7 +283,7 @@
   }
   .text-h2 {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.4vw, 3rem); /* restaurant header ~48px */
+    font-size: clamp(2rem, 3.4vw, 3rem); /* restaurant header ~48px; ~32px floor on mobile */
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -411,14 +411,6 @@
 
 @utility animate-fade-up {
   animation: fade-up 0.8s ease both;
-}
-
-@keyframes gallerySlide {
-  /* The track duplicates its items, so a full loop is -50% of the track. The
-     extra `- 0.375rem` is half of the `gap-3` (0.75rem) between tiles: without
-     it the loop lands half a gap short and visibly hitches at the seam. */
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-50% - 0.375rem)); }
 }
 
 /* Scroll reveal (see src/components/Reveal). `item` lifts the wrapper as one

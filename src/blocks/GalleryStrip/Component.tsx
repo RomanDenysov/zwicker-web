@@ -6,7 +6,7 @@ import { Media } from '@/components/Media'
 import { Reveal } from '@/components/Reveal'
 import { cn } from '@/utilities/ui'
 
-const speeds = { slow: '60s', normal: '35s', fast: '20s' }
+import { ScrollGallery } from './ScrollGallery'
 
 const backgrounds: Record<string, string> = {
   default: '',
@@ -97,38 +97,13 @@ export const GalleryStripBlock: React.FC<GalleryStripBlockProps> = ({
     )
   }
 
-  // scroll variant — duplicate the array for seamless infinite scroll.
-  // The second half is visual-only; screen readers skip it.
-  const loop = [...items, ...items]
-  const originalLen = items.length
-
+  // scroll variant — Embla carousel: continuous auto-scroll + touch/mouse drag.
   return (
     <section
-      className={cn('pt-28 pb-44 overflow-hidden', bg)}
+      className={cn('pt-16 pb-12 md:pt-28 md:pb-44', bg)}
       {...(isBrown ? { 'data-theme': 'dark' } : {})}
     >
-      <div
-        className="flex gap-3 animate-[gallerySlide_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none"
-        style={{ animationDuration: speeds[scrollSpeed || 'normal'] }}
-      >
-        {loop.map((img, i) => (
-          <div
-            key={`${img.id}-${i}`}
-            aria-hidden={i >= originalLen ? 'true' : undefined}
-            className="relative shrink-0 w-[420px] h-[300px] overflow-hidden rounded"
-          >
-            <Media
-              resource={img}
-              fill
-              size="420px"
-              // First few tiles are visible before the marquee scrolls; load them eagerly.
-              loading={i < 3 ? 'eager' : 'lazy'}
-              decoding="sync"
-              imgClassName="object-cover saturate-[0.8] hover:saturate-100 transition-[filter] duration-500 ease-smooth"
-            />
-          </div>
-        ))}
-      </div>
+      <ScrollGallery items={items} scrollSpeed={scrollSpeed} />
     </section>
   )
 }
