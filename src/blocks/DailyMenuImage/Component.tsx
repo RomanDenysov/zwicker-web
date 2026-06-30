@@ -27,7 +27,8 @@ export const DailyMenuImageBlock: React.FC = async () => {
         )}
         {menu.enableGuestDownload && (
           <div className="mt-10 flex justify-center">
-            <MenuDownloadButton />
+            {/* Frontend is SK-only (`<html lang="sk">`); thread the active locale here once localized routing exists. */}
+            <MenuDownloadButton locale="sk" />
           </div>
         )}
       </div>
