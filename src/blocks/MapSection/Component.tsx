@@ -9,16 +9,24 @@ function extractIframeSrc(html: string): string | null {
   return match ? match[1] : null
 }
 
+// Build a no-API-key embed src from coordinates (preferred) or a free-text address.
+function buildEmbedSrc(googleMapsUrl?: string | null, address?: string | null): string | null {
+  const coords = googleMapsUrl?.match(/q=(-?\d+\.\d+,\s*-?\d+\.\d+)/)?.[1]
+  const query = coords ?? address?.replace(/\n/g, ', ').trim()
+  if (!query) return null
+  return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=16&hl=sk&output=embed`
+}
+
 export const MapSectionBlock: React.FC<MapSectionBlockProps> = async ({
   address,
   embedSource,
   customEmbed,
 }) => {
+  const settings = await getSettings()
   const raw =
-    embedSource === 'custom' && customEmbed
-      ? customEmbed
-      : (await getSettings()).googleMapsEmbed || ''
-  const src = raw.trim().startsWith('<iframe') ? extractIframeSrc(raw) : raw.trim() || null
+    embedSource === 'custom' && customEmbed ? customEmbed : settings.googleMapsEmbed || ''
+  const configured = raw.trim().startsWith('<iframe') ? extractIframeSrc(raw) : raw.trim() || null
+  const src = configured ?? buildEmbedSrc(settings.googleMapsUrl, address)
 
   return (
     <section className="py-20">
