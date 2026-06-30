@@ -33,6 +33,16 @@ export async function Footer() {
                 {settings.siteDescription}
               </p>
             )}
+            {(settings.instagram || settings.facebook) && (
+              <div className="flex gap-5 mt-7">
+                {settings.instagram && (
+                  <SocialLink href={settings.instagram} label="Instagram" />
+                )}
+                {settings.facebook && (
+                  <SocialLink href={settings.facebook} label="Facebook" />
+                )}
+              </div>
+            )}
           </div>
           {navItems.length > 0 && (
             <div>
@@ -43,7 +53,7 @@ export async function Footer() {
                     <CMSLink
                       {...link}
                       appearance="inline"
-                      className="text-sm text-dark-muted hover:text-dark-foreground transition-colors"
+                      className="text-sm uppercase tracking-wide text-dark-muted hover:text-dark-foreground transition-colors"
                     />
                   </li>
                 ))}
@@ -67,13 +77,19 @@ export async function Footer() {
           <span className="text-xs tracking-wide text-dark-subtle">
             {'©'} {year} Zwicker. Všetky práva vyhradené.
           </span>
-          <div className="flex gap-5">
-            {settings.instagram && (
-              <SocialLink href={settings.instagram} label="Instagram" />
-            )}
-            {settings.facebook && (
-              <SocialLink href={settings.facebook} label="Facebook" />
-            )}
+          <div className="flex gap-6">
+            <Link
+              href="/pravne-udaje"
+              className="text-label text-dark-subtle hover:text-primary-light transition-colors"
+            >
+              Právne údaje
+            </Link>
+            <Link
+              href="/gdpr"
+              className="text-label text-dark-subtle hover:text-primary-light transition-colors"
+            >
+              GDPR
+            </Link>
           </div>
         </div>
       </Container>
@@ -86,11 +102,11 @@ function ContactLine({ label, value, href }: { label: string; value: string; hre
     <div>
       <div className="text-label text-dark-subtle mb-1">{label}</div>
       {href ? (
-        <Link href={href} className="text-sm text-dark-muted hover:text-primary-light whitespace-pre-line transition-colors">
+        <Link href={href} className="text-sm uppercase text-dark-muted hover:text-primary-light whitespace-pre-line transition-colors">
           {value}
         </Link>
       ) : (
-        <span className="text-sm text-dark-muted whitespace-pre-line">{value}</span>
+        <span className="text-sm uppercase text-dark-muted whitespace-pre-line">{value}</span>
       )}
     </div>
   )
