@@ -57,7 +57,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     src: srcFromProps,
     loading: loadingFromProps,
     decoding,
-    quality = 80,
+    // Default 65: the site is atmospheric restaurant photography (often darkened/
+    // desaturated) where AVIF q65 is visually indistinguishable from q80 but ~30%
+    // smaller. Callers can still opt into higher quality per image.
+    quality = 65,
   } = props
 
   let width: number | undefined
@@ -100,6 +103,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         placeholder={useBlur ? 'blur' : 'empty'}
         blurDataURL={useBlur ? placeholderBlur : undefined}
         priority={priority}
+        // Next 16 deprecated `priority` and stopped emitting fetchpriority=high on
+        // the LCP image's preload link; set it explicitly so Lighthouse's "LCP
+        // request discovery" audit passes and the hero fetch is prioritised.
+        fetchPriority={priority ? 'high' : undefined}
         quality={quality}
         decoding={decoding}
         loading={loading}
