@@ -4,6 +4,13 @@
   "description": "Website template for Payload",
   "license": "MIT",
   "type": "module",
+  "browserslist": [
+    "chrome >= 93",
+    "edge >= 93",
+    "firefox >= 92",
+    "safari >= 15.4",
+    "ios_saf >= 15.4"
+  ],
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
