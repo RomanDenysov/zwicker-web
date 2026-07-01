@@ -414,20 +414,49 @@
 }
 
 /* Page transition (see src/app/(frontend)/template.tsx). The template re-mounts
-   per navigation, replaying this entrance. Uses the independent `translate`
-   property and no fill-mode so it composes with descendant transforms and
-   leaves no lingering transform (which would reparent fixed/sticky children).
+   per navigation, replaying this entrance. Rather than fading the content's
+   opacity (which reveals the light `--background` behind it and reads as a light
+   flash), a dark veil sits over the fresh content on mount and dissolves off it,
+   so the page emerges *from dark*. The content itself only does a subtle
+   `translate` settle - the independent `translate` property with no fill-mode
+   composes with descendant transforms and leaves no lingering transform (which
+   would reparent fixed/sticky children). `position: relative` (z-index auto)
+   anchors the veil without creating a containing block for fixed descendants.
    Gated on motion preference, mirroring the Reveal convention. */
 @keyframes page-enter {
   from {
-    opacity: 0;
     translate: 0 8px;
   }
+}
+
+@keyframes page-veil {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* `position: relative` (z-index auto) unconditionally so layout is identical for
+   reduced-motion users; only the animation and dark veil are gated below. */
+.page-transition {
+  position: relative;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .page-transition {
     animation: page-enter 0.45s var(--ease-out-quint);
+  }
+
+  .page-transition::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    background: var(--dark);
+    animation: page-veil 0.45s var(--ease-out-quint) forwards;
   }
 }
 
