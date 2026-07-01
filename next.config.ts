@@ -31,6 +31,9 @@ const nextConfig: NextConfig = {
       },
     ],
     qualities: [65, 80],
+    // Serve AVIF first (≈20-30% smaller than WebP) with WebP fallback - smaller
+    // photos = faster LCP/Speed Index across the hero and food imagery.
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)
