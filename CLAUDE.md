@@ -104,13 +104,9 @@ Copy `.env.example` to `.env`. Required: `DATABASE_URL`, `PAYLOAD_SECRET`. Used 
 
 ## Testing conventions
 
-- Integration tests: `tests/int/**/*.int.spec.ts` with Vitest + jsdom + Testing Library. `tsconfigPaths()` is loaded so `@/` imports work.
+- Integration tests: `tests/int/**/*.int.spec.ts` with Vitest + jsdom. `tsconfigPaths()` is loaded so `@/` imports work.
 - E2E: Playwright, Chromium only, HTML reporter. `webServer.reuseExistingServer: true` so running `pnpm dev` first is fine.
 - Fixtures/helpers live in `tests/helpers/`.
-
-## Docker
-
-`docker-compose.yml` still references a `mongo` service even though the project is wired for Postgres. Don't rely on `docker-compose up` without first updating it to a Postgres service or running Postgres separately.
 
 ## Conventions
 
