@@ -34,6 +34,10 @@ const nextConfig: NextConfig = {
     // Serve AVIF first (≈20-30% smaller than WebP) with WebP fallback - smaller
     // photos = faster LCP/Speed Index across the hero and food imagery.
     formats: ['image/avif', 'image/webp'],
+    // AVIF is ~50% slower to encode, so keep optimized variants cached for 31 days
+    // instead of the 4h default - avoids repeated cold re-encodes that spike LCP.
+    // Safe because getMediaUrl() cache-busts the URL with the media's updatedAt.
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)
@@ -55,6 +59,11 @@ const nextConfig: NextConfig = {
     return webpackConfig
   },
   reactStrictMode: true,
+  // Inline the ~17KiB of CSS into the HTML so it isn't a render-blocking request
+  // on the critical path (Lighthouse flagged a ~590ms CSS chain on mobile).
+  experimental: {
+    inlineCss: true,
+  },
   redirects,
   turbopack: {
     root: path.resolve(dirname),
