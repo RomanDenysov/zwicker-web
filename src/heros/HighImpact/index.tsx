@@ -18,11 +18,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
   useDarkTheme()
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      setMorphed(true)
-      return
-    }
-    const t = setTimeout(() => setMorphed(true), 750)
+    // Reduced motion skips the hold; the global reduced-motion CSS makes the
+    // morph transition instant, so 0ms lands directly on the final state.
+    const t = setTimeout(() => setMorphed(true), prefersReducedMotion() ? 0 : 750)
     return () => clearTimeout(t)
   }, [])
 

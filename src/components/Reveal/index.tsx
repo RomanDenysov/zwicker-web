@@ -32,11 +32,6 @@ export const Reveal: React.FC<RevealProps> = ({
     const el = ref.current
     if (!el) return
 
-    if (typeof IntersectionObserver === 'undefined') {
-      setRevealed(true)
-      return
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

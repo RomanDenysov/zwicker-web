@@ -22,9 +22,17 @@ export const HeaderClient: React.FC<{ data: Header }> = ({ data }) => {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
+  // Close the menu when the route changes (covers back/forward navigation; link
+  // clicks already close it in MobileMenu). Adjusted during render per
+  // https://react.dev/learn/you-might-not-need-an-effect
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname)
+    setMobileOpen(false)
+  }
+
   useEffect(() => {
     setHeaderTheme(null)
-    setMobileOpen(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
