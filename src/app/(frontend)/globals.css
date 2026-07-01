@@ -409,6 +409,23 @@
   }
 }
 
+/* Hero photo emerges from black (see HighImpact hero). CSS-driven so the dissolve
+   begins at first paint rather than after hydration - a JS-gated fade left the
+   above-the-fold hero black until the bundle ran, tanking Speed Index on slow
+   devices. `both` holds the transparent end state; the global reduced-motion rule
+   zeroes the duration so it snaps straight to the revealed photo. */
+@keyframes heroReveal {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.hero-reveal {
+  animation: heroReveal 1.2s ease-out both;
+}
+
 @utility animate-fade-up {
   animation: fade-up 0.8s ease both;
 }

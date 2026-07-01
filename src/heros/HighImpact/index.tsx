@@ -15,7 +15,6 @@ const LETTERS = ['Z', 'W', 'I', 'C', 'K', 'E', 'R'] as const
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   const [morphed, setMorphed] = useState(false)
-  const [revealed, setRevealed] = useState(false)
   useDarkTheme()
 
   useEffect(() => {
@@ -25,12 +24,6 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
     }
     const t = setTimeout(() => setMorphed(true), 750)
     return () => clearTimeout(t)
-  }, [])
-
-  // Fade the photo in from black on the next frame so the opacity transition runs.
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setRevealed(true))
-    return () => cancelAnimationFrame(raf)
   }, [])
 
   return (
@@ -45,18 +38,20 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           speed={0.35}
           priority
           sizes="100vw"
+          // The photo is crushed by brightness(0.55) + overlays, so lower quality
+          // is imperceptible but meaningfully cuts LCP bytes.
+          quality={65}
         />
       )}
       <div
         className="absolute inset-0 bg-ink-900/12 pointer-events-none"
         style={{ backgroundColor: 'rgba(28,28,26,0.12)' }}
       />
-      {/* Photo emerges from black on load (also hides the image blur-placeholder flash). */}
-      <div
-        aria-hidden
-        className="absolute inset-0 z-[1] bg-black pointer-events-none"
-        style={{ opacity: revealed ? 0 : 1, transition: 'opacity 1.2s ease-out' }}
-      />
+      {/* Photo emerges from black on load (also hides the image blur-placeholder flash).
+          CSS-driven so the dissolve starts at first paint instead of waiting for
+          hydration - otherwise the hero stays black until the JS bundle runs, which
+          tanks Speed Index on slow devices. */}
+      <div aria-hidden className="hero-reveal absolute inset-0 z-[1] bg-black pointer-events-none" />
       <div className="relative z-10 px-4">
         <h1 className="mb-6">
           <span className="sr-only">Zwicker - Reštaurácia a penzión</span>

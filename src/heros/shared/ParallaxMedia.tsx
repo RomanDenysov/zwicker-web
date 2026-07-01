@@ -15,6 +15,7 @@ type Props = {
   priority?: boolean
   anchor?: 'top' | 'center'
   sizes?: string
+  quality?: number
 }
 
 export const ParallaxMedia: React.FC<Props> = ({
@@ -26,6 +27,7 @@ export const ParallaxMedia: React.FC<Props> = ({
   priority = false,
   anchor = 'top',
   sizes,
+  quality,
 }) => {
   const ref = useParallax<HTMLDivElement>(speed, anchor)
 
@@ -64,6 +66,7 @@ export const ParallaxMedia: React.FC<Props> = ({
         priority={priority}
         loading={priority ? undefined : eager ? 'eager' : 'lazy'}
         size={sizes}
+        quality={quality}
         resource={resource}
         imgClassName={imgClassName}
       />
